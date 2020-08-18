@@ -42,11 +42,11 @@ export default class Login extends Component {
         return (
             <div className="container">
                 <div
-                    class="card text-white bg-info mb-3"
+                    className="card text-white bg-info mb-3"
                     style={{maxWidth : "350px"}}
                 >
-                    <div class="card-header"><h3>sign up</h3></div>
-                    <div class="card-body">
+                    <div className="card-header"><h3>sign up</h3></div>
+                    <div className="card-body">
                     <form onSubmit={this.submit}>
                     
                     <div className="form-group">

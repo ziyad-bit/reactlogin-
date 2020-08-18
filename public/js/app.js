@@ -71429,12 +71429,13 @@ var Add = /*#__PURE__*/function (_Component) {
 /*!***************************************************!*\
   !*** ./resources/js/components/AdminsFunction.js ***!
   \***************************************************/
-/*! exports provided: register, login, getProfile, addItems */
+/*! exports provided: register, registerget, login, getProfile, addItems */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "register", function() { return register; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerget", function() { return registerget; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "login", function() { return login; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getProfile", function() { return getProfile; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addItems", function() { return addItems; });
@@ -71482,6 +71483,18 @@ var register = /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }();
+var registerget = function registerget() {
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("http://localhost:8000/api/register", {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then(function (response) {
+    console.log(response);
+    return response.data;
+  })["catch"](function (err) {
+    console.log(err);
+  });
+};
 var login = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(admins) {
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
@@ -71826,14 +71839,14 @@ var Login = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        "class": "card text-white bg-info mb-3",
+        className: "card text-white bg-info mb-3",
         style: {
           maxWidth: "350px"
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        "class": "card-header"
+        className: "card-header"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "sign up")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        "class": "card-body"
+        className: "card-body"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.submit
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -72119,6 +72132,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var Register = /*#__PURE__*/function (_Component) {
   _inherits(Register, _Component);
 
@@ -72137,6 +72151,7 @@ var Register = /*#__PURE__*/function (_Component) {
       //errorsmsg
       nameRequired: "",
       emailRequired: "",
+      emailUnique: '',
       passwordRequired: '',
       isValid: '',
       success: ''
@@ -72211,12 +72226,18 @@ var Register = /*#__PURE__*/function (_Component) {
   }, {
     key: "submit",
     value: function submit(e) {
+      var _this2 = this;
+
       e.preventDefault();
       this.validate();
 
       if (this.state.isValid == true) {
         this.setState({
           success: 'you signed up successfully'
+        });
+      } else {
+        this.setState({
+          success: ''
         });
       }
 
@@ -72226,12 +72247,23 @@ var Register = /*#__PURE__*/function (_Component) {
         password: this.state.password
       };
       Object(_AdminsFunction__WEBPACK_IMPORTED_MODULE_1__["register"])(newadmins).then(function (res) {});
+      Object(_AdminsFunction__WEBPACK_IMPORTED_MODULE_1__["registerget"])().then(function (res) {
+        if (_this2.state.success) {
+          _this2.setState({
+            emailUnique: ''
+          });
+        } else {
+          _this2.setState({
+            emailUnique: res['Msgs']['email.unique']
+          });
+        }
+      });
     }
   }, {
     key: "render",
     value: function render() {
       var success = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "alert alert-success"
+        className: "alert alert-success text-center"
       }, this.state.success);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
@@ -72271,7 +72303,11 @@ var Register = /*#__PURE__*/function (_Component) {
         style: {
           color: 'red'
         }
-      }, this.state.emailRequired)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.state.emailRequired), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", {
+        style: {
+          color: 'red'
+        }
+      }, this.state.emailUnique)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "password"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "password",

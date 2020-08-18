@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('register', 'AdminsController@register');
+Route::get('register', 'AdminsController@register');
 Route::post('login', 'AdminsController@login');
 Route::get('profile', 'AdminsController@getAuthenticatedadmins');
 

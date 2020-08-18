@@ -25,13 +25,15 @@ class Adminscontroller extends Controller
             'password' => 'required|string|min:6', 
         ];
 
-        
+        $Msgs=[
+            'email.unique'=>'this email is used'
+        ];
 
-        $validator = Validator::make($request->json()->all() ,$rules );
+        $validator = Validator::make($request->json()->all() ,$rules , $Msgs );
 
         
         if($validator->fails()){
-                return response()->json();
+                return response()->json(compact('Msgs'));
         }
 
 

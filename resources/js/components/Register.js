@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { register } from "./AdminsFunction";
+import { registerget } from "./AdminsFunction";
 
 class Register extends Component {
     constructor() {
@@ -13,7 +14,9 @@ class Register extends Component {
 
             nameRequired: "",
             emailRequired: "",
+            emailUnique:'',
             passwordRequired:'',
+
             
             isValid:'',
             success:''
@@ -35,6 +38,7 @@ class Register extends Component {
         let emailRequired='';
         let passwordRequired='';
         
+        
 
         if(this.state.name.length < 5){
             nameRequired='u should enter at least 5 characters'
@@ -50,6 +54,8 @@ class Register extends Component {
                 nameRequired:''
             })
         }
+
+        
 
         if(this.state.email.length < 15){
             emailRequired='u should enter at least 15 characters'
@@ -97,6 +103,10 @@ class Register extends Component {
             this.setState({
                 success:'you signed up successfully'
             })
+        }else{
+            this.setState({
+                success:''
+            })
         }
 
         const newadmins = {
@@ -109,10 +119,25 @@ class Register extends Component {
             
             
         });
+        registerget().then(res=>{
+            if ( this.state.success ) {
+                this.setState({
+                    emailUnique:'',
+                    
+                })
+            }else{
+                this.setState({
+                    emailUnique:res['Msgs']['email.unique'],
+                    
+                })
+            }
+            
+            
+        })
     }
 
     render() {
-        const success= (<div className='alert alert-success'>{this.state.success }</div>)
+        const success= (<div className='alert alert-success text-center'>{this.state.success }</div>)
         return (
             <div className="container">
                 {this.state.success ? success : null}
@@ -147,6 +172,7 @@ class Register extends Component {
                                     onChange={this.change}
                                 />
                                 <small style={{color:'red'}}>{this.state.emailRequired}</small>
+                                <small style={{color:'red'}}>{this.state.emailUnique}</small>
                             </div>
 
                             <div className="form-group">
