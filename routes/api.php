@@ -20,3 +20,12 @@ Route::get('profile', 'AdminsController@getAuthenticatedadmins');
 
 
 
+    
+Route::post("items/add", "itemsController@store");
+Route::get("items/addform", 'AdminsController@getAuthenticatedadmins');
+
+
+
+
+
+

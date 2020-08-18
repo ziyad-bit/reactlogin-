@@ -21,6 +21,7 @@ class Navbar extends Component {
                         Register
                     </Link>
                 </li>
+                
             </ul>
         );
 
@@ -39,6 +40,11 @@ class Navbar extends Component {
                     >
                         Logout
                     </a>
+                </li>
+                <li className="nav-item">
+                    <Link to="/items/addform" className="nav-link">
+                        add items  
+                    </Link>
                 </li>
             </ul>
         );

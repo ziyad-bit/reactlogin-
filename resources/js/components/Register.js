@@ -1,93 +1,175 @@
-import React, { Component } from 'react'
-import { register } from './AdminsFunction'
+import React, { Component } from "react";
+import { register } from "./AdminsFunction";
 
 class Register extends Component {
     constructor() {
-        super()
+        super();
         this.state = {
+            name: "",
+            email: "",
+            password: "",
+
+            //errorsmsg
+
+            nameRequired: "",
+            emailRequired: "",
+            passwordRequired:'',
             
-            name: '',
-            email: '',
-            password: '',
-            errors: {}
-        }
+            isValid:'',
+            success:''
+        };
 
-        this.onChange = this.onChange.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
+        this.change = this.change.bind(this);
+        this.submit = this.submit.bind(this);
+        this.validate=this.validate.bind(this);
     }
 
-    onChange (e) {
-        this.setState({ [e.target.name]: e.target.value })
-    }
-    onSubmit (e) {
-        e.preventDefault()
+    
 
-        const newadmins = {
-            name: this.state.name ,
-            email: this.state.email,
-            password: this.state.password
+    change(e) {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    validate(){
+        let nameRequired='';
+        let emailRequired='';
+        let passwordRequired='';
+        
+
+        if(this.state.name.length < 5){
+            nameRequired='u should enter at least 5 characters'
+        }
+        if (nameRequired) {
+            this.setState({
+                nameRequired,
+                isValid: false
+            })
+            
+        }else{
+            this.setState({
+                nameRequired:''
+            })
         }
 
-        register(newadmins).then(res => {
-            this.props.history.push(`/login`)
+        if(this.state.email.length < 15){
+            emailRequired='u should enter at least 15 characters'
+        }
+        if (emailRequired) {
+            this.setState({
+                emailRequired,
+                isValid: false
+            })
+            
+        }else{
+            this.setState({
+                emailRequired:''
+                
+            })
+        }
+
+        if(this.state.password.length < 8){
+            passwordRequired='u should enter at least 8 characters'
+        }
+        if (passwordRequired) {
+            this.setState({
+                passwordRequired,
+                isValid: false
+
+            })
+            
+        }else{
+            this.setState({
+                passwordRequired:''
+            })
+        }
+
+        this.setState({
+            
+            isValid: true
+
         })
     }
 
-    render () {
+    submit(e) {
+        e.preventDefault();
+        this.validate();
+        if ( this.state.isValid == true) {
+            this.setState({
+                success:'you signed up successfully'
+            })
+        }
+
+        const newadmins = {
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password
+        };
+
+        register(newadmins).then(res => {
+            
+            
+        });
+    }
+
+    render() {
+        const success= (<div className='alert alert-success'>{this.state.success }</div>)
         return (
             <div className="container">
-                <div className="row">
-                    <div className="col-md-6 mt-5 mx-auto">
-                        <form noValidate onSubmit={this.onSubmit}>
-                            <h1 className="h3 mb-3 font-weight-normal">
-                                Register
-                            </h1>
+                {this.state.success ? success : null}
+                <div
+                    className="card text-white bg-info mb-3"
+                    style={{ maxWidth: "350px" }}
+                >
+                    <div className="card-header">
+                        <h3>sign up</h3>
+                    </div>
+                    <div className="card-body">
+                        <form onSubmit={this.submit}>
                             <div className="form-group">
-                                <label htmlFor="name"> name</label>
+                                <label>name</label>
                                 <input
                                     type="text"
                                     className="form-control"
                                     name="name"
-                                    placeholder="Enter your  name"
                                     value={this.state.name}
-                                    onChange={this.onChange}
+                                    aria-describedby="emailHelp"
+                                    onChange={this.change}
                                 />
+                                <small style={{color:'red'}}>{this.state.nameRequired}</small>
                             </div>
-                            
                             <div className="form-group">
-                                <label htmlFor="email">Email address</label>
+                                <label>email</label>
                                 <input
                                     type="email"
                                     className="form-control"
-                                    name="email"
-                                    placeholder="Enter email"
                                     value={this.state.email}
-                                    onChange={this.onChange}
+                                    name="email"
+                                    onChange={this.change}
                                 />
+                                <small style={{color:'red'}}>{this.state.emailRequired}</small>
                             </div>
+
                             <div className="form-group">
-                                <label htmlFor="password">Password</label>
+                                <label>password</label>
                                 <input
                                     type="password"
                                     className="form-control"
-                                    name="password"
-                                    placeholder="Password"
                                     value={this.state.password}
-                                    onChange={this.onChange}
+                                    name="password"
+                                    onChange={this.change}
                                 />
+                                <small style={{color:'red'}}>{this.state.passwordRequired}</small>
                             </div>
-                            <button
-                                type="submit"
-                                className="btn btn-lg btn-primary btn-block"
-                            >
-                                Register!
+
+                            <button type="submit" className="btn btn-success">
+                                sign up
                             </button>
                         </form>
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
 
-export default Register
+export default Register;

@@ -46,6 +46,12 @@ return [
             'provider' => 'admins',
             'hash' => false,
         ],
+
+        'apicrud' => [
+            'driver' => 'token',
+            'provider' => 'admins',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -70,6 +76,8 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Admins::class,
         ],
+
+        
 
         // 'users' => [
         //     'driver' => 'database',

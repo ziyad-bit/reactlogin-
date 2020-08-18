@@ -9,25 +9,29 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 //use JWTAuth;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Facades\JWTFactory;
+
 use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Contracts\JWTSubject;
-use Tymon\JWTAuth\PayloadFactory;
-use Tymon\JWTAuth\JWTManager as JWT;
+
+
 
 class Adminscontroller extends Controller
 {   
 
     public function register(Request $request)
     {
-        $validator = Validator::make($request->json()->all() , [
+        $rules=[
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:admins',
             'password' => 'required|string|min:6', 
-        ]);
+        ];
 
+        
+
+        $validator = Validator::make($request->json()->all() ,$rules );
+
+        
         if($validator->fails()){
-                return response()->json($validator->errors()->toJson(), 400);
+                return response()->json();
         }
 
 
@@ -77,7 +81,10 @@ class Adminscontroller extends Controller
         return response()->json(compact('admins'));
     }
 
+    
 
+
+    
 
 
 
