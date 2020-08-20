@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { register } from "./AdminsFunction";
-import { registerget } from "./AdminsFunction";
 
 class Register extends Component {
     constructor() {
@@ -8,106 +7,85 @@ class Register extends Component {
         this.state = {
             name: "",
             email: "",
-            password: "",
+            password: " ",
 
             //errorsmsg
 
             nameRequired: "",
             emailRequired: "",
-            emailUnique:'',
-            passwordRequired:'',
+            emailUnique: "",
+            passwordRequired: "",
 
-            
-            isValid:'',
-            success:''
+            success: ""
         };
-
-        this.change = this.change.bind(this);
-        this.submit = this.submit.bind(this);
-        this.validate=this.validate.bind(this);
     }
 
-    
-
-    change(e) {
+    change = e => {
         this.setState({ [e.target.name]: e.target.value });
-    }
+    };
 
-    validate(){
-        let nameRequired='';
-        let emailRequired='';
-        let passwordRequired='';
+    validateName = () => {
+        let nameRequired = "";
         
         
 
-        if(this.state.name.length < 5){
-            nameRequired='u should enter at least 5 characters'
+        if (this.state.name.length < 5) {
+            nameRequired = "u should enter at least 5 characters";
         }
         if (nameRequired) {
             this.setState({
-                nameRequired,
-                isValid: false
-            })
-            
-        }else{
+                nameRequired
+            });
+            return false;
+        } else {
             this.setState({
-                nameRequired:''
-            })
+                nameRequired: ""
+            });
+            return true
         }
+    };
 
-        
-
-        if(this.state.email.length < 15){
-            emailRequired='u should enter at least 15 characters'
-        }
-        if (emailRequired) {
-            this.setState({
-                emailRequired,
-                isValid: false
-            })
-            
-        }else{
-            this.setState({
-                emailRequired:''
-                
-            })
-        }
-
-        if(this.state.password.length < 8){
-            passwordRequired='u should enter at least 8 characters'
+    validatePassword() {
+        let passwordRequired = "";
+        if (this.state.password.length < 8) {
+            passwordRequired = "u should enter at least 8 characters";
         }
         if (passwordRequired) {
             this.setState({
-                passwordRequired,
-                isValid: false
-
-            })
-            
-        }else{
+                passwordRequired
+            });
+            return false;
+        } else {
             this.setState({
-                passwordRequired:''
-            })
+                passwordRequired: ""
+            });
+            return true
         }
-
-        this.setState({
-            
-            isValid: true
-
-        })
     }
 
-    submit(e) {
-        e.preventDefault();
-        this.validate();
-        if ( this.state.isValid == true) {
-            this.setState({
-                success:'you signed up successfully'
-            })
-        }else{
-            this.setState({
-                success:''
-            })
+    validateEmail = () => {
+        let emailRequired = "";
+        if (this.state.email.length < 15) {
+            emailRequired = "u should enter at least 15 characters";
         }
+        if (emailRequired) {
+            this.setState({
+                emailRequired
+            });
+            return false;
+        } else {
+            this.setState({
+                emailRequired: ""
+            });
+            return true
+        }
+    };
+
+    submit = e => {
+        e.preventDefault();
+        const validateName=this.validateName();
+        const validateEmail=this.validateEmail();
+        const validatePassword=this.validatePassword();
 
         const newadmins = {
             name: this.state.name,
@@ -116,28 +94,24 @@ class Register extends Component {
         };
 
         register(newadmins).then(res => {
-            
-            
-        });
-        registerget().then(res=>{
-            if ( this.state.success ) {
-                this.setState({
-                    emailUnique:'',
-                    
-                })
-            }else{
-                this.setState({
-                    emailUnique:res['Msgs']['email.unique'],
-                    
-                })
+            if (res) {
+                this.props.history.push(`/login`);
             }
-            
-            
-        })
-    }
+
+            if (!res && validateEmail==true && validateName==true && validatePassword==true) {
+                this.setState({
+                    emailUnique: "this email is used"
+                });
+            }
+        });
+    };
 
     render() {
-        const success= (<div className='alert alert-success text-center'>{this.state.success }</div>)
+        const success = (
+            <div className="alert alert-success text-center">
+                {this.state.success}
+            </div>
+        );
         return (
             <div className="container">
                 {this.state.success ? success : null}
@@ -160,7 +134,9 @@ class Register extends Component {
                                     aria-describedby="emailHelp"
                                     onChange={this.change}
                                 />
-                                <small style={{color:'red'}}>{this.state.nameRequired}</small>
+                                <small style={{ color: "red" }}>
+                                    {this.state.nameRequired}
+                                </small>
                             </div>
                             <div className="form-group">
                                 <label>email</label>
@@ -171,8 +147,12 @@ class Register extends Component {
                                     name="email"
                                     onChange={this.change}
                                 />
-                                <small style={{color:'red'}}>{this.state.emailRequired}</small>
-                                <small style={{color:'red'}}>{this.state.emailUnique}</small>
+                                <small style={{ color: "red" }}>
+                                    {this.state.emailRequired}
+                                </small>
+                                <small style={{ color: "red" }}>
+                                    {this.state.emailUnique}
+                                </small>
                             </div>
 
                             <div className="form-group">
@@ -184,7 +164,9 @@ class Register extends Component {
                                     name="password"
                                     onChange={this.change}
                                 />
-                                <small style={{color:'red'}}>{this.state.passwordRequired}</small>
+                                <small style={{ color: "red" }}>
+                                    {this.state.passwordRequired}
+                                </small>
                             </div>
 
                             <button type="submit" className="btn btn-success">

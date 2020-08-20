@@ -20,20 +20,18 @@ class Adminscontroller extends Controller
     public function register(Request $request)
     {
         $rules=[
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:admins',
-            'password' => 'required|string|min:6', 
+            'name' => 'required|string|max:100|min:5',
+            'email' => 'required|string|email|max:100|min:15|unique:admins',
+            'password' => 'required|string|min:8|max:100', 
         ];
 
-        $Msgs=[
-            'email.unique'=>'this email is used'
-        ];
+        
 
-        $validator = Validator::make($request->json()->all() ,$rules , $Msgs );
+        $validator = Validator::make($request->json()->all() ,$rules  );
 
         
         if($validator->fails()){
-                return response()->json(compact('Msgs'));
+            return response()->json(['errors'], 400);
         }
 
 
@@ -45,7 +43,9 @@ class Adminscontroller extends Controller
 
         $token = JWTAuth::fromuser($admins);
 
-        return response()->json(compact('admins','token'),201);
+        $success='you signed up successfully';
+
+        return response()->json(compact('admins','token','success'),201);
     }
 
     

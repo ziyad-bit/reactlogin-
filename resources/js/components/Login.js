@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { login } from './AdminsFunction'
+import { login } from "./AdminsFunction";
 
 export default class Login extends Component {
     constructor() {
@@ -11,7 +11,7 @@ export default class Login extends Component {
         this.state = {
             email: "",
             password: "",
-            
+            error: ""
         };
     }
 
@@ -23,19 +23,17 @@ export default class Login extends Component {
 
     submit(e) {
         e.preventDefault();
-        
-        const admins={
-            email:this.state.email,
-            password:this.state.password
-        }
-        
+
+        const admins = {
+            email: this.state.email,
+            password: this.state.password
+        };
+
         login(admins).then(res => {
             if (res) {
-                this.props.history.push(`/profile`)
+                this.props.history.push(`/profile`);
             }
-        })
-    
-
+        });
     }
 
     render() {
@@ -43,43 +41,41 @@ export default class Login extends Component {
             <div className="container">
                 <div
                     className="card text-white bg-info mb-3"
-                    style={{maxWidth : "350px"}}
+                    style={{ maxWidth: "350px" }}
                 >
-                    <div className="card-header"><h3>sign up</h3></div>
+                    <div className="card-header">
+                        <h3>login </h3>
+                    </div>
                     <div className="card-body">
-                    <form onSubmit={this.submit}>
-                    
-                    <div className="form-group">
-                        <label>email</label>
-                        <input
-                            type="email"
-                            className="form-control"
-                            value={this.state.email}
-                            name="email"
-                            onChange={this.change}
-                        />
-                    </div>
+                        <form onSubmit={this.submit}>
+                            <div className="form-group">
+                                <label>email</label>
+                                <input
+                                    type="email"
+                                    className="form-control"
+                                    value={this.state.email}
+                                    name="email"
+                                    onChange={this.change}
+                                />
+                            </div>
 
-                    <div className="form-group">
-                        <label>password</label>
-                        <input
-                            type="password"
-                            className="form-control"
-                            value={this.state.password}
-                            name="password"
-                            onChange={this.change}
-                        />
-                    </div>
-                    
+                            <div className="form-group">
+                                <label>password</label>
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    value={this.state.password}
+                                    name="password"
+                                    onChange={this.change}
+                                />
+                            </div>
 
-                    <button type="submit" className="btn btn-success">
-                        login 
-                    </button>
-                </form>
-                        
+                            <button type="submit" className="btn btn-success">
+                                login
+                            </button>
+                        </form>
                     </div>
                 </div>
-                
             </div>
         );
     }

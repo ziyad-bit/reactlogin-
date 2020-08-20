@@ -11,25 +11,14 @@ export const register = async newadmins => {
             headers: { "Content-Type": "application/json" }
         })
         .then(response => {
-            console.log(response);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-};
-export const registerget = ()=> {
-    return  axios
-        .get("http://localhost:8000/api/register",  {
-            headers: { "Content-Type": "application/json" }
-        })
-        .then(response => {
-            console.log(response);
+            
             return response.data
         })
         .catch(err => {
             console.log(err);
         });
 };
+
 
 export const login = async admins => {
     return await axios
@@ -80,5 +69,7 @@ export const addItems = async newItems => {
             console.log(err);
         });
 };
+
+
 
 
