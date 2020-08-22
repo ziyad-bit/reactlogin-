@@ -20,7 +20,7 @@ class Adminscontroller extends Controller
     public function register(Request $request)
     {
         $rules=[
-            'name' => 'required|string|max:100|min:5',
+            'name' => 'required|string|max:25|min:5',
             'email' => 'required|string|email|max:100|min:15|unique:admins',
             'password' => 'required|string|min:8|max:100', 
         ];

@@ -34,7 +34,8 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        
+        $items=Items::all();
+        return $items;
     }
 
     /**

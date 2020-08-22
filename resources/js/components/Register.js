@@ -12,6 +12,7 @@ class Register extends Component {
             //errorsmsg
 
             nameRequired: "",
+            nameValid:'',
             emailRequired: "",
             emailUnique: "",
             passwordRequired: "",
@@ -26,6 +27,21 @@ class Register extends Component {
 
     validateName = () => {
         let nameRequired = "";
+        
+        if (this.state.name.length > 25) {
+            nameRequired = "u can't enter more than 25 characters";
+        }
+        if (nameRequired) {
+            this.setState({
+                nameRequired
+            });
+            return false;
+        } else {
+            this.setState({
+                nameRequired: ""
+            });
+            
+        }
         
         
 
@@ -136,6 +152,9 @@ class Register extends Component {
                                 />
                                 <small style={{ color: "red" }}>
                                     {this.state.nameRequired}
+                                </small>
+                                <small style={{ color: "red" }}>
+                                    {this.state.nameValid}
                                 </small>
                             </div>
                             <div className="form-group">

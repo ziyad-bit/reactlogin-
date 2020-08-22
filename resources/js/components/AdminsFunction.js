@@ -7,12 +7,12 @@ const url="http://localhost:8000/api/";
 
 export const register = async newadmins => {
     return await axios
-        .post("http://localhost:8000/api/register", newadmins, {
+        .post(url+"register", newadmins, {
             headers: { "Content-Type": "application/json" }
         })
         .then(response => {
             
-            return response.data
+            return response
         })
         .catch(err => {
             console.log(err);
@@ -23,7 +23,7 @@ export const register = async newadmins => {
 export const login = async admins => {
     return await axios
         .post(
-            "http://localhost:8000/api/login",
+            url+"login",
             {
                 email: admins.email,
                 password: admins.password
@@ -43,7 +43,7 @@ export const login = async admins => {
 
 export const getProfile = () => {
     return axios
-        .get("http://localhost:8000/api/profile", {
+        .get(url+"profile", {
             headers: { Authorization: `Bearer ${localStorage.usertoken}` }
         })
         .then(response => {
@@ -59,7 +59,7 @@ export const getProfile = () => {
 
 export const addItems = async newItems => {
     return await axios
-        .post("http://localhost:8000/api/items/add", newItems, {
+        .post(url+"items/add", newItems, {
             headers: { Authorization: `Bearer ${localStorage.usertoken}` }
         })
         .then(response => {
@@ -71,5 +71,18 @@ export const addItems = async newItems => {
 };
 
 
+export const getItems = () => {
+    return axios
+        .get(url+"items", {
+            headers: { Authorization: `Bearer ${localStorage.usertoken}` }
+        })
+        .then(response => {
+            
+            return response;
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
 
 

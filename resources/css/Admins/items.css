@@ -1,0 +1,22 @@
+li.list-group-item:nth-child(odd){
+    background-color:#eee;
+}
+
+img{
+    height: 250px;
+    width: 20px;
+}
+
+.price{
+    margin-right: 10px;
+}
+
+span{
+    color: #535c68;
+    font-weight: bold;
+}
+
+.list{
+    color:#22a6b3;
+}
+
