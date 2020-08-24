@@ -19,8 +19,8 @@ class Items extends Component {
     render() {
         return (
             <div>
-                <h1>All items</h1>
-                <div><Link to="/items/addform" className='btn btn-success'>add items</Link></div>
+                <h1 className='text-center'>All items</h1>
+                <div><Link to="/items/addform" className='btn btn-info info '>add items</Link></div>
                 <div className="row">
                     {this.state.items.map(item => {
                         return (

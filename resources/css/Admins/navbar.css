@@ -1,6 +1,7 @@
 .items{
     margin-right: 400px; 
-    
+    margin-left: 5px;
+    color: gray;
 }
 
 .nav-item{
@@ -11,7 +12,13 @@
 
 .home{
     margin-right: 300px; 
-    margin-left: 70px;
+    
     font-size:30px;
     
 }
+
+.categories{
+    margin-left: 5px;
+    color: gray;
+}
+

@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { HashRouter as Router, Route } from "react-router-dom";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import {  faHome,faCalendarAlt,faBorderAll } from '@fortawesome/free-solid-svg-icons'
 
 
 import Navbar from "./Navbar";
@@ -11,6 +14,9 @@ import Profile from "./Profile";
 
 import Add from "./Add";
 import Items from "./Items";
+
+
+library.add(fab , faHome,faCalendarAlt,faBorderAll)
 
 class Example extends Component {
     render() {

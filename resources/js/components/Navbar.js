@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import "../../css/Admins/navbar.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Navbar extends Component {
     logOut(e) {
@@ -29,17 +30,19 @@ class Navbar extends Component {
             <ul className="navbar-nav">
                 <li className="nav-item ">
                     <Link to="/profile" className="nav-link">
-                        profile
+                    <span className='profile'>profile</span>
                     </Link>
                 </li>
                 <li className="nav-item ">
                     <Link to="/profile" className="nav-link">
-                        categories
+                    <FontAwesomeIcon icon="border-all" />
+                    <span className='categories'>categories</span>
                     </Link>
                 </li>
-                <li className="nav-item items">
+                <li className="nav-item ">
                     <Link to="/items" className="nav-link">
-                        items
+                        <FontAwesomeIcon icon="calendar-alt" />
+                        <span className='items'>items</span>
                     </Link>
                 </li>
                 <li className="nav-item ">
@@ -51,14 +54,11 @@ class Navbar extends Component {
                         Logout
                     </a>
                 </li>
-
-                
             </ul>
         );
 
         return (
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                
                 <button
                     class="navbar-toggler"
                     type="button"
@@ -73,11 +73,11 @@ class Navbar extends Component {
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item active home">
-                            <Link class="nav-link" to='/'>
+                            <Link class="nav-link" to="/">
+                                <FontAwesomeIcon icon="home" />
                                 Home <span class="sr-only">(current)</span>
                             </Link>
                         </li>
-                        
                     </ul>
                     {localStorage.usertoken ? userLink : loginRegLink}
                 </div>

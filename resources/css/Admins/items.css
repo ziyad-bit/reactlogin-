@@ -2,11 +2,9 @@ li.list-group-item:nth-child(odd){
     background-color:#eee;
 }
 
-img{
-    height: 250px;
-    width: 20px;
+.info{
+    margin-left: 65px; 
 }
-
 .price{
     margin-right: 10px;
 }
