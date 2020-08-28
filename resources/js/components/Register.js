@@ -7,17 +7,16 @@ class Register extends Component {
         this.state = {
             name: "",
             email: "",
+
             password: " ",
 
             //errorsmsg
 
             nameRequired: "",
-            nameValid:'',
+            nameValid: "",
             emailRequired: "",
             emailUnique: "",
-            passwordRequired: "",
-
-            success: ""
+            passwordRequired: ""
         };
     }
 
@@ -27,7 +26,7 @@ class Register extends Component {
 
     validateName = () => {
         let nameRequired = "";
-        
+
         if (this.state.name.length > 25) {
             nameRequired = "u can't enter more than 25 characters";
         }
@@ -40,10 +39,7 @@ class Register extends Component {
             this.setState({
                 nameRequired: ""
             });
-            
         }
-        
-        
 
         if (this.state.name.length < 5) {
             nameRequired = "u should enter at least 5 characters";
@@ -57,7 +53,7 @@ class Register extends Component {
             this.setState({
                 nameRequired: ""
             });
-            return true
+            return true;
         }
     };
 
@@ -75,7 +71,7 @@ class Register extends Component {
             this.setState({
                 passwordRequired: ""
             });
-            return true
+            return true;
         }
     }
 
@@ -93,15 +89,16 @@ class Register extends Component {
             this.setState({
                 emailRequired: ""
             });
-            return true
+            return true;
         }
     };
 
     submit = e => {
         e.preventDefault();
-        const validateName=this.validateName();
-        const validateEmail=this.validateEmail();
-        const validatePassword=this.validatePassword();
+
+        const validateName = this.validateName();
+        const validateEmail = this.validateEmail();
+        const validatePassword = this.validatePassword();
 
         const newadmins = {
             name: this.state.name,
@@ -109,28 +106,29 @@ class Register extends Component {
             password: this.state.password
         };
 
-        register(newadmins).then(res => {
-            if (res) {
-                this.props.history.push(`/login`);
-            }
-
-            if (!res && validateEmail==true && validateName==true && validatePassword==true) {
-                this.setState({
-                    emailUnique: "this email is used"
-                });
-            }
-        });
+        register(newadmins)
+            .then(res => {
+                if (res) {
+                    this.props.history.push(`/login`);
+                }
+                if (
+                    ! res &&
+                    validateEmail == true &&
+                    validateName == true &&
+                    validatePassword == true
+                ) {
+                    this.setState({
+                        emailUnique: "this email is used"
+                    });
+                }
+                
+            })
+            
     };
 
     render() {
-        const success = (
-            <div className="alert alert-success text-center">
-                {this.state.success}
-            </div>
-        );
         return (
             <div className="container">
-                {this.state.success ? success : null}
                 <div
                     className="card text-white bg-info mb-3"
                     style={{ maxWidth: "350px" }}
@@ -139,7 +137,10 @@ class Register extends Component {
                         <h3>sign up</h3>
                     </div>
                     <div className="card-body">
-                        <form onSubmit={this.submit}>
+                        <form
+                            onSubmit={this.submit}
+                            encType="multipart/form-data"
+                        >
                             <div className="form-group">
                                 <label>name</label>
                                 <input

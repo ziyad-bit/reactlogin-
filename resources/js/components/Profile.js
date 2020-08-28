@@ -1,47 +1,63 @@
-import React, { Component } from 'react'
-import { getProfile } from './AdminsFunction'
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { getProfile } from "./AdminsFunction";
+import "../../css/Admins/profile.css";
 
 class Profile extends Component {
     constructor() {
-        super()
+        super();
         this.state = {
-            name: '',
-            email: ''
-        }
+            name: "",
+            email: "",
+            birthDate: ""
+        };
     }
 
     componentDidMount() {
         getProfile().then(res => {
             this.setState({
                 name: res.admins.name,
-                email: res.admins.email
-            })
-        })
+                email: res.admins.email,
+                birthDate: res.admins.birth_date,
+                id: res.admins.id
+            });
+        });
     }
 
     render() {
         return (
-            <div className="container">
-                <div className="jumbotron mt-5">
-                    <div className="col-sm-4 mx-auto">
-                        <h1 className="text-center">PROFILE</h1>
+            <div>
+                <Link to={"/add/photo/" + this.state.id} className='btn btn-info photo'>Edit photo</Link>
+                <div className="card mb-3" style={{ maxWidth: "540px" }}>
+                    <div className="row no-gutters">
+                        <div className="col-md-4">
+                            <img src="..." className="card-img" alt="..." />
+                        </div>
+                        <div className="col-md-8">
+                            <ul className="list-group">
+                                <li className="list-group-item active">
+                                    <h4>information</h4>
+                                </li>
+                                <li className="list-group-item ">
+                                    <span className="group">name</span>:
+                                    {this.state.name}
+                                </li>
+
+                                <li className="list-group-item ">
+                                    <span className="group">email</span>:
+                                    {this.state.email}
+                                </li>
+                                <li className="list-group-item">
+                                    <span className="group2">birth date</span>:
+                                    {this.state.birthDate}
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <table className="table col-md-4 mx-auto">
-                        <tbody>
-                            <tr>
-                                <td>Name</td>
-                                <td>{this.state.name}</td>
-                            </tr>
-                            <tr>
-                                <td>Email</td>
-                                <td>{this.state.email}</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
-        )
+        );
     }
 }
 
-export default Profile
+export default Profile;

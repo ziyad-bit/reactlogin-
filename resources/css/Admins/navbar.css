@@ -1,5 +1,5 @@
 .items{
-    margin-right: 400px; 
+    margin-right: 600px; 
     margin-left: 5px;
     color: gray;
 }
@@ -10,15 +10,21 @@
     
 }
 
-.home{
-    margin-right: 300px; 
-    
-    font-size:30px;
-    
+.profile{
+    margin-left: 5px;
+    color: gray;
 }
 
 .categories{
     margin-left: 5px;
     color: gray;
+    
 }
+
+.rounded-circle{
+    width: 20px;
+    height: 30px;
+}
+
+
 

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { HashRouter as Router, Route } from "react-router-dom";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
-import {  faHome,faCalendarAlt,faBorderAll } from '@fortawesome/free-solid-svg-icons'
+import {  faHome,faCalendarAlt,faBorderAll ,faUser} from '@fortawesome/free-solid-svg-icons'
 
 
 import Navbar from "./Navbar";
@@ -14,9 +14,10 @@ import Profile from "./Profile";
 
 import Add from "./Add";
 import Items from "./Items";
+import Photo from "./Photo";
 
 
-library.add(fab , faHome,faCalendarAlt,faBorderAll)
+library.add(fab , faHome,faCalendarAlt,faBorderAll,faUser)
 
 class Example extends Component {
     render() {
@@ -27,6 +28,7 @@ class Example extends Component {
                     <Route exact path="/" component={Landing} />
                     <div className="container">
                         <Route exact path="/register" component={Register} />
+                        <Route exact path="/add/photo/:id" component={Photo} />
                         <Route exact path="/items/addform" component={Add} />
                         <Route exact path="/items" component={Items} />
                         <Route exact path="/login" component={Login} />

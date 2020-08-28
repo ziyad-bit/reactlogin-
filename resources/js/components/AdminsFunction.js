@@ -5,13 +5,13 @@ const url="http://localhost:8000/api/";
 
 
 
-export const register = async newadmins => {
+export const register = async (newadmins,formData) => {
     return await axios
-        .post(url+"register", newadmins, {
+        .post(url+"register", newadmins,formData, {
             headers: { "Content-Type": "application/json" }
         })
         .then(response => {
-            
+            console.log(response)
             return response
         })
         .catch(err => {
@@ -85,4 +85,17 @@ export const getItems = () => {
         });
 };
 
+export const postPhoto = async (id,formData) => {
+    return await axios
+        .post(url+"add/photo/"+id, formData, {
+            headers: { Authorization: `Bearer ${localStorage.usertoken}` }
+        })
+        .then(response => {
+            console.log(response);
+            return response
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
 

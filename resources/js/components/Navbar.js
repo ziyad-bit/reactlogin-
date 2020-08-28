@@ -29,20 +29,21 @@ class Navbar extends Component {
         const userLink = (
             <ul className="navbar-nav">
                 <li className="nav-item ">
-                    <Link to="/profile" className="nav-link">
-                    <span className='profile'>profile</span>
+                    <Link to="/profile" className="nav-link ">
+                        <FontAwesomeIcon icon="user" />
+                        <span className="profile">profile</span>
                     </Link>
                 </li>
                 <li className="nav-item ">
                     <Link to="/profile" className="nav-link">
-                    <FontAwesomeIcon icon="border-all" />
-                    <span className='categories'>categories</span>
+                        <FontAwesomeIcon icon="border-all" />
+                        <span className="categories ">categories</span>
                     </Link>
                 </li>
                 <li className="nav-item ">
                     <Link to="/items" className="nav-link">
                         <FontAwesomeIcon icon="calendar-alt" />
-                        <span className='items'>items</span>
+                        <span className="items">items</span>
                     </Link>
                 </li>
                 <li className="nav-item ">
@@ -58,9 +59,9 @@ class Navbar extends Component {
         );
 
         return (
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <button
-                    class="navbar-toggler"
+                    className="navbar-toggler"
                     type="button"
                     data-toggle="collapse"
                     data-target="#navbarNav"
@@ -68,14 +69,14 @@ class Navbar extends Component {
                     aria-expanded="false"
                     aria-label="Toggle navigation"
                 >
-                    <span class="navbar-toggler-icon"></span>
+                    <span className="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item active home">
-                            <Link class="nav-link" to="/">
+                <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="navbar-nav">
+                        <li className="nav-item active home">
+                            <Link className="nav-link" to="/">
                                 <FontAwesomeIcon icon="home" />
-                                Home <span class="sr-only">(current)</span>
+                                Home <span className="sr-only">(current)</span>
                             </Link>
                         </li>
                     </ul>

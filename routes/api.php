@@ -27,6 +27,10 @@ Route::get("items", "itemsController@index");
 
 
 
+Route::post("add/photo/{id}", "AdminsController@upload");
+
+
+
 
 
 
