@@ -19469,7 +19469,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "li.list-group-item:nth-child(even){\r\n    background-color:#eee;\r\n}\r\n\r\n.info{\r\n    margin-left: 65px; \r\n}\r\n.price{\r\n    margin-right: 10px;\r\n}\r\n\r\nspan{\r\n    color: #535c68;\r\n    font-weight: bold;\r\n}\r\n\r\n.list{\r\n    color:#22a6b3;\r\n}\r\n\r\n", ""]);
+exports.push([module.i, "li.list-group-item:nth-child(even){\r\n    background-color:#eee;\r\n}\r\n\r\n.info{\r\n    margin-left: 65px; \r\n}\r\n.price{\r\n    margin-right: 10px;\r\n}\r\n\r\nspan{\r\n    color: #535c68;\r\n    font-weight: bold;\r\n}\r\n\r\n.list{\r\n    color:#22a6b3;\r\n}\r\n\r\n.btn{\r\n    padding-top:5px;\r\n    padding-bottom: 5px;\r\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -19507,7 +19507,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".group{\r\n    margin-right: 40px;\r\n}\r\n\r\n.group2{\r\n    margin-right: 5px;\r\n}\r\n\r\n.photo{\r\n    margin-top: 20px;\r\n    margin-left: 285px;\r\n}", ""]);
+exports.push([module.i, ".group{\r\n    margin-right: 40px;\r\n}\r\n\r\n.group2{\r\n    margin-right: 5px;\r\n}\r\n\r\n.photo{\r\n    margin-top: 20px;\r\n    margin-left: 285px;\r\n}\r\n\r\nimg{\r\n    min-height: 255px;\r\n}\r\n", ""]);
 
 // exports
 
@@ -84730,8 +84730,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _css_Admins_Add_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_css_Admins_Add_css__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -84752,6 +84750,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -84767,11 +84767,19 @@ var Add = /*#__PURE__*/function (_Component) {
     _classCallCheck(this, Add);
 
     _this = _super.call(this);
+
+    _defineProperty(_assertThisInitialized(_this), "changeStatePhoto", function (e) {
+      _this.setState({
+        image: e.target.files[0]
+      });
+    });
+
     _this.state = {
       name: "",
       description: "",
       price: "",
-      status: ""
+      status: "",
+      image: ''
     };
     _this.submit = _this.submit.bind(_assertThisInitialized(_this));
     _this.changeState = _this.changeState.bind(_assertThisInitialized(_this));
@@ -84779,18 +84787,23 @@ var Add = /*#__PURE__*/function (_Component) {
   }
 
   _createClass(Add, [{
+    key: "changeState",
+    value: function changeState(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
     key: "submit",
     value: function submit(e) {
       var _this2 = this;
 
       e.preventDefault();
-      var newItems = {
-        name: this.state.name,
-        description: this.state.description,
-        price: this.state.price,
-        status: this.state.status
-      };
-      Object(_AdminsFunction__WEBPACK_IMPORTED_MODULE_1__["addItems"])(newItems).then(function (res) {
+      var formData = new FormData();
+      formData.append('image', this.state.image);
+      formData.append('name', this.state.name);
+      formData.append('description', this.state.description);
+      formData.append('status', this.state.status);
+      formData.append('price', this.state.price);
+      Object(_AdminsFunction__WEBPACK_IMPORTED_MODULE_1__["addItems"])(formData).then(function (res) {
         _this2.setState({
           name: "",
           description: "",
@@ -84800,24 +84813,19 @@ var Add = /*#__PURE__*/function (_Component) {
       });
     }
   }, {
-    key: "changeState",
-    value: function changeState(e) {
-      this.setState(_defineProperty({}, e.target.name, e.target.value));
-    }
-  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        "class": "card text-white bg-info mb-3",
+        className: "card text-white bg-info mb-3",
         style: {
           maxWidth: "350px"
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        "class": "card-header"
+        className: "card-header"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Add items")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        "class": "card-body"
+        className: "card-body"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.submit
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -84853,6 +84861,13 @@ var Add = /*#__PURE__*/function (_Component) {
         value: this.state.status,
         name: "status",
         onChange: this.changeState
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "photo"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "file",
+        className: "form-control",
+        name: "image",
+        onChange: this.changeStatePhoto
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit",
         className: "btn btn-success"
@@ -84895,13 +84910,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var url = "http://localhost:8000/api/";
 var register = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(newadmins, formData) {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(newadmins) {
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(url + "register", newadmins, formData, {
+            return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(url + "register", newadmins, {
               headers: {
                 "Content-Type": "application/json"
               }
@@ -84923,7 +84938,7 @@ var register = /*#__PURE__*/function () {
     }, _callee);
   }));
 
-  return function register(_x, _x2) {
+  return function register(_x) {
     return _ref.apply(this, arguments);
   };
 }();
@@ -84959,36 +84974,24 @@ var login = /*#__PURE__*/function () {
     }, _callee2);
   }));
 
-  return function login(_x3) {
+  return function login(_x2) {
     return _ref2.apply(this, arguments);
   };
 }();
-var getProfile = function getProfile() {
-  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(url + "profile", {
-    headers: {
-      Authorization: "Bearer ".concat(localStorage.usertoken)
-    }
-  }).then(function (response) {
-    console.log(response);
-    return response.data;
-  })["catch"](function (err) {
-    console.log(err);
-  });
-}; //             crud app
-
-var addItems = /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(newItems) {
+var getProfile = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
             _context3.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(url + "items/add", newItems, {
+            return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(url + "profile", {
               headers: {
                 Authorization: "Bearer ".concat(localStorage.usertoken)
               }
             }).then(function (response) {
               console.log(response);
+              return response.data;
             })["catch"](function (err) {
               console.log(err);
             });
@@ -85004,35 +85007,24 @@ var addItems = /*#__PURE__*/function () {
     }, _callee3);
   }));
 
-  return function addItems(_x4) {
+  return function getProfile() {
     return _ref3.apply(this, arguments);
   };
-}();
-var getItems = function getItems() {
-  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(url + "items", {
-    headers: {
-      Authorization: "Bearer ".concat(localStorage.usertoken)
-    }
-  }).then(function (response) {
-    return response;
-  })["catch"](function (err) {
-    console.log(err);
-  });
-};
-var postPhoto = /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(id, formData) {
+}(); //             crud app
+
+var addItems = /*#__PURE__*/function () {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(formData) {
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
             _context4.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(url + "add/photo/" + id, formData, {
+            return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(url + "items/add", formData, {
               headers: {
                 Authorization: "Bearer ".concat(localStorage.usertoken)
               }
             }).then(function (response) {
               console.log(response);
-              return response;
             })["catch"](function (err) {
               console.log(err);
             });
@@ -85048,8 +85040,52 @@ var postPhoto = /*#__PURE__*/function () {
     }, _callee4);
   }));
 
-  return function postPhoto(_x5, _x6) {
+  return function addItems(_x3) {
     return _ref4.apply(this, arguments);
+  };
+}();
+var getItems = function getItems() {
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(url + "items", {
+    headers: {
+      Authorization: "Bearer ".concat(localStorage.usertoken)
+    }
+  }).then(function (response) {
+    return response;
+  })["catch"](function (err) {
+    console.log(err);
+  });
+};
+var postPhoto = /*#__PURE__*/function () {
+  var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(id, formData) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.next = 2;
+            return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(url + "add/photo/" + id, formData, {
+              headers: {
+                Authorization: "Bearer ".concat(localStorage.usertoken)
+              }
+            }).then(function (response) {
+              console.log(response);
+              return response;
+            })["catch"](function (err) {
+              console.log(err);
+            });
+
+          case 2:
+            return _context5.abrupt("return", _context5.sent);
+
+          case 3:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5);
+  }));
+
+  return function postPhoto(_x4, _x5) {
+    return _ref5.apply(this, arguments);
   };
 }();
 
@@ -85269,7 +85305,8 @@ var Items = /*#__PURE__*/function (_Component) {
         className: "row"
       }, this.state.items.map(function (item) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: " col-6 col-md-6 col-lg-4 "
+          className: " col-6 col-md-6 col-lg-4 ",
+          key: item.id
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "card",
           style: {
@@ -85287,19 +85324,19 @@ var Items = /*#__PURE__*/function (_Component) {
           className: "list-group list-group-flush"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           className: "list-group-item"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "status"), " : ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "status"), " :", " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "list"
         }, " ", item.status)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           className: "list-group-item"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "price"
-        }, "price"), ": ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        }, "price"), ":", " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "list"
-        }, "$ ", item.price))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "card-body"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, "$ ", item.price)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          className: "list-group-item"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "btn btn-success"
-        }, "buy"))));
+        }, "buy")))));
       })));
     }
   }]);
@@ -85667,9 +85704,7 @@ var Navbar = /*#__PURE__*/function (_Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _AdminsFunction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AdminsFunction */ "./resources/js/components/AdminsFunction.js");
+/* harmony import */ var _AdminsFunction__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminsFunction */ "./resources/js/components/AdminsFunction.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -85693,7 +85728,6 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 
@@ -85798,7 +85832,7 @@ var Photo = /*#__PURE__*/function (_Component) {
       var formData = new FormData();
       formData.append("image", _this.state.image);
       var id = _this.props.match.params.id;
-      Object(_AdminsFunction__WEBPACK_IMPORTED_MODULE_2__["postPhoto"])(id, formData).then(function (res) {
+      Object(_AdminsFunction__WEBPACK_IMPORTED_MODULE_1__["postPhoto"])(id, formData).then(function (res) {
         if (res) {
           _this.setState({
             success: "photo is updated successfully"
@@ -85898,6 +85932,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -85913,12 +85949,20 @@ var Profile = /*#__PURE__*/function (_Component) {
 
     _classCallCheck(this, Profile);
 
-    _this = _super.call(this);
-    _this.state = {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
       name: "",
       email: "",
-      birthDate: ""
-    };
+      birthDate: "",
+      id: "",
+      created_at: ""
+    });
+
     return _this;
   }
 
@@ -85932,7 +85976,9 @@ var Profile = /*#__PURE__*/function (_Component) {
           name: res.admins.name,
           email: res.admins.email,
           birthDate: res.admins.birth_date,
-          id: res.admins.id
+          id: res.admins.id,
+          created_at: res.admins.created_at,
+          image: res.admins.image
         });
       });
     }
@@ -85952,7 +85998,7 @@ var Profile = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: "...",
+        src: "/images/Admins/profile/" + this.state.image,
         className: "card-img",
         alt: "..."
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -85962,18 +86008,22 @@ var Profile = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "list-group-item active"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "information")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "list-group-item "
+        className: "list-group-item items_list"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "group"
       }, "name"), ":", this.state.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "list-group-item "
+        className: "list-group-item items_list "
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "group"
       }, "email"), ":", this.state.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "list-group-item"
+        className: "list-group-item items_list"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "group2"
-      }, "birth date"), ":", this.state.birthDate))))));
+      }, "birth date"), ":", this.state.birthDate), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "list-group-item items_list"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "group2"
+      }, " created at"), ":", this.state.created_at))))));
     }
   }]);
 

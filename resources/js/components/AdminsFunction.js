@@ -5,9 +5,9 @@ const url="http://localhost:8000/api/";
 
 
 
-export const register = async (newadmins,formData) => {
+export const register = async (newadmins) => {
     return await axios
-        .post(url+"register", newadmins,formData, {
+        .post(url+"register", newadmins, {
             headers: { "Content-Type": "application/json" }
         })
         .then(response => {
@@ -41,8 +41,8 @@ export const login = async admins => {
         });
 };
 
-export const getProfile = () => {
-    return axios
+export const getProfile =async () => {
+    return await axios
         .get(url+"profile", {
             headers: { Authorization: `Bearer ${localStorage.usertoken}` }
         })
@@ -57,11 +57,14 @@ export const getProfile = () => {
 
 //             crud app
 
-export const addItems = async newItems => {
+export const addItems = async (formData) => {
     return await axios
-        .post(url+"items/add", newItems, {
-            headers: { Authorization: `Bearer ${localStorage.usertoken}` }
-        })
+        .post(url+"items/add",formData,  {
+            headers: { Authorization: `Bearer ${localStorage.usertoken}` },
+            
+        },
+        
+        )
         .then(response => {
             console.log(response);
         })

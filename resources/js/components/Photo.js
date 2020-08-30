@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import axios, { post } from "axios";
-import { getProfile, postPhoto } from "./AdminsFunction";
+
+import { postPhoto } from "./AdminsFunction";
 
 class Photo extends Component {
     state = {
@@ -55,8 +55,8 @@ class Photo extends Component {
         let imageType = "";
         let type = this.state.image.type;
         if (
-            type != "image/png" &&
-            type != "image/jpg" &&
+            type != "image/png"  &&
+            type != "image/jpg"  &&
             type != "image/jpeg" &&
             type != "image/gif"
         ) {

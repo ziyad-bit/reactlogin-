@@ -24,6 +24,7 @@ Route::get('profile', 'AdminsController@getAuthenticatedadmins');
     
 Route::post("items/add", "itemsController@store");
 Route::get("items", "itemsController@index");
+Route::get("images/Admins/profile/{image}", "AdminsController@getAuthenticatedadmins");
 
 
 

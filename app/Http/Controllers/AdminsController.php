@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admins;
+use App\Traits\UploadImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -11,9 +12,9 @@ use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-
 class Adminscontroller extends Controller
 {
+    use UploadImage;
 
     public function register(Request $request)
     {
@@ -62,8 +63,6 @@ class Adminscontroller extends Controller
             if (!$admins = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['admins_not_found'], 404);
             }
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-            return response()->json(['token_expired'], $e->getStatusCode());
         } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
             return response()->json(['token_invalid'], $e->getStatusCode());
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
@@ -72,12 +71,12 @@ class Adminscontroller extends Controller
         return response()->json(compact('admins'));
     }
 
-    
-    public function upload(Request $request,$id)
+    public function upload(Request $request, $id)
     {
+
         $rules = [
             'image' => 'required|image|mimes:jpg,jpeg,gif,png|max:8048',
-            
+
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -86,18 +85,12 @@ class Adminscontroller extends Controller
             return response()->json(['errors'], 400);
         }
 
-        $file =$request->file('image');
-        $fileName = time() . '-' . $file->getClientOriginalName();
+        $fileName = $this->uploadImage($request->file('image'), 'images/Admins/profile');
 
-        $file->move('images/Admins/profile', $fileName);
-
-        
-
-        $fileupload =Admins::find($id);
+        $fileupload = Admins::find($id);
         $fileupload->image = $fileName;
         $fileupload->save();
         return response()->json('Successfully added');
-
     }
 
 }

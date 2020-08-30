@@ -9,22 +9,36 @@ class Add extends Component {
             name: "",
             description: "",
             price: "",
-            status: ""
+            status: "",
+            image:''
         };
 
         this.submit = this.submit.bind(this);
         this.changeState = this.changeState.bind(this);
     }
 
+    changeState(e) {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    changeStatePhoto=(e)=>{
+        this.setState({
+            image:e.target.files[0]
+        })
+    }
+
     submit(e) {
         e.preventDefault();
-        const newItems = {
-            name: this.state.name,
-            description: this.state.description,
-            price: this.state.price,
-            status: this.state.status
-        };
-        addItems(newItems).then(res => {
+
+        const formData=new FormData();
+        formData.append('image',this.state.image)
+        formData.append('name',this.state.name)
+        formData.append('description',this.state.description)
+        formData.append('status',this.state.status)
+        formData.append('price',this.state.price)
+
+    
+        addItems(formData).then(res => {
             this.setState({
                 name: "",
                 description: "",
@@ -34,21 +48,20 @@ class Add extends Component {
         });
     }
 
-    changeState(e) {
-        this.setState({ [e.target.name]: e.target.value });
-    }
+
+    
 
     render() {
         return (
             <div className="container">
                 <div
-                    class="card text-white bg-info mb-3"
+                    className="card text-white bg-info mb-3"
                     style={{ maxWidth: "350px" }}
                 >
-                    <div class="card-header">
+                    <div className="card-header">
                         <h3>Add items</h3>
                     </div>
-                    <div class="card-body">
+                    <div className="card-body">
                         <form onSubmit={this.submit}>
                             <div className="form-group">
                                 <label>name</label>
@@ -90,6 +103,16 @@ class Add extends Component {
                                     value={this.state.status}
                                     name="status"
                                     onChange={this.changeState}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>photo</label>
+                                <input
+                                    type="file"
+                                    className="form-control"
+                                    
+                                    name="image"
+                                    onChange={this.changeStatePhoto}
                                 />
                             </div>
 

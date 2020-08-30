@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Items;
+use App\Traits\UploadImage;
+
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -11,6 +13,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ItemsController extends Controller
 {
+    use UploadImage;
 
     protected $admins;
 
@@ -19,8 +22,6 @@ class ItemsController extends Controller
             if (! $admins = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['admins_not_found'], 404);
             }
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-            return response()->json(['token_expired'], $e->getStatusCode());
         } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
             return response()->json(['token_invalid'], $e->getStatusCode());
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
@@ -57,13 +58,14 @@ class ItemsController extends Controller
     public function store(Request $request)
     {
         
-        
+        $fileName=$this->uploadImage($request->file('image'),'images/Admins/items');
+
         $items = Items::create([
-            'name'        => $request->json()->get('name'),
-            'description' => $request->json()->get('description'),
-            'price'       => $request->json()->get('price'),
-            'status'      => $request->json()->get('status'),
-            
+            'name'        => $request->get('name'),
+            'description' => $request->get('description'),
+            'price'       => $request->get('price'),
+            'status'      => $request->get('status'),
+            'image'       => $fileName,
         ]);
 
         return response()->json( compact('items') );
