@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { getItems } from "./AdminsFunction";
 import "../../css/Admins/items.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 class Items extends Component {
     state = {
@@ -9,17 +10,22 @@ class Items extends Component {
     };
 
     componentDidMount() {
+        
         getItems().then(res => {
             this.setState({
                 items: res.data
             });
+            
         });
     }
+
+    
 
     render() {
         return (
             <div>
                 <h1 className="text-center">All items</h1>
+
                 <div>
                     <Link to="/items/addform" className="btn btn-info info ">
                         add items
@@ -34,8 +40,8 @@ class Items extends Component {
                                     style={{ width: "14rem" }}
                                 >
                                     <img
-                                        src={require("./download.jpg")}
-                                        className="card-img-top"
+                                        src={"/images/Admins/items/"+item.image}
+                                        className="card-img-top img"
                                         alt="..."
                                     />
                                     <div className="card-body">

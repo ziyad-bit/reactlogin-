@@ -93,4 +93,28 @@ class Adminscontroller extends Controller
         return response()->json('Successfully added');
     }
 
+
+
+    public function edit($id){
+        $admin=Admins::find($id);
+
+        return $admin;
+
+        
+    }
+
+    public function update(Request $request,$id){
+        $admin=Admins::find($id);
+
+        $admin->name=$request->name;
+        $admin->email=$request->email;
+        $admin->password=$request->password;
+
+        $admin->save();
+
+        
+
+        
+    }
+
 }

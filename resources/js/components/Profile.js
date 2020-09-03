@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link , Redirect } from "react-router-dom";
 import { getProfile } from "./AdminsFunction";
 import "../../css/Admins/profile.css";
 
@@ -26,21 +26,29 @@ class Profile extends Component {
     }
 
     render() {
-        return (
+        const profile = 
             <div>
+                
                 <Link
                     to={"/add/photo/" + this.state.id}
                     className="btn btn-info photo"
                 >
                     Edit photo
                 </Link>
+                <Link
+                    to={"/Admin/update/" + this.state.id}
+                    className="btn btn-info photo"
+                >
+                    Edit profile
+                </Link>
+
                 <div className="card mb-3" style={{ maxWidth: "540px" }}>
                     <div className="row no-gutters">
                         <div className="col-md-4">
                             <img
-                                src={"/images/Admins/profile/"+this.state.image}
-                                    
-                                
+                                src={
+                                    "/images/Admins/profile/" + this.state.image
+                                }
                                 className="card-img"
                                 alt="..."
                             />
@@ -71,6 +79,14 @@ class Profile extends Component {
                         </div>
                     </div>
                 </div>
+                
+            </div>
+        
+        return (
+            <div>
+                {localStorage.usertoken
+                    ? profile
+                    : <Redirect to={'/login'}></Redirect>}
             </div>
         );
     }

@@ -17,7 +17,7 @@ class ItemsController extends Controller
 
     protected $admins;
 
-    public function __construct(){
+    /*public function __construct(){
         try {
             if (! $admins = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['admins_not_found'], 404);
@@ -27,7 +27,7 @@ class ItemsController extends Controller
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
             return response()->json(['token_absent'], $e->getStatusCode());
         }
-    }
+    }*/
     /**
      * Display a listing of the resource.
      *

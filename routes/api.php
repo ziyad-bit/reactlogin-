@@ -17,18 +17,25 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', 'AdminsController@register');
 
 Route::post('login', 'AdminsController@login');
+
+
+
 Route::get('profile', 'AdminsController@getAuthenticatedadmins');
+
+
 
 
 
     
 Route::post("items/add", "itemsController@store");
 Route::get("items", "itemsController@index");
-Route::get("images/Admins/profile/{image}", "AdminsController@getAuthenticatedadmins");
+
 
 
 
 Route::post("add/photo/{id}", "AdminsController@upload");
+Route::get("Admin/{id}", "AdminsController@edit");
+Route::post("Admin/update/{id}", "AdminsController@update");
 
 
 

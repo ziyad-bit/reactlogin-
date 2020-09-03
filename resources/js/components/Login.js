@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { login } from "./AdminsFunction";
+import Example from "./Example";
 
 export default class Login extends Component {
     constructor() {
@@ -11,10 +12,11 @@ export default class Login extends Component {
         this.state = {
             email: "",
             password: "",
-            error: ""
+            error: "",
+            
         };
     }
-
+    
     change(e) {
         this.setState({
             [e.target.name]: e.target.value
@@ -32,6 +34,7 @@ export default class Login extends Component {
         login(admins).then(res => {
             if (res) {
                 this.props.history.push(`/profile`);
+                
             }
         });
     }
@@ -39,6 +42,7 @@ export default class Login extends Component {
     render() {
         return (
             <div className="container">
+                
                 <div
                     className="card text-white bg-info mb-3"
                     style={{ maxWidth: "350px" }}
@@ -76,6 +80,7 @@ export default class Login extends Component {
                         </form>
                     </div>
                 </div>
+
             </div>
         );
     }

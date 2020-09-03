@@ -102,3 +102,31 @@ export const postPhoto = async (id,formData) => {
         });
 };
 
+
+export const getAdmin = (id) => {
+    return axios
+        .get(url+"Admin/"+id, {
+            headers: { Authorization: `Bearer ${localStorage.usertoken}` }
+        })
+        .then(response => {
+            
+            return response.data;
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
+export const updateProfile = async (id,newAdmins) => {
+    return await axios
+        .post(url+"Admin/update/"+id, newAdmins, {
+            headers: { Authorization: `Bearer ${localStorage.usertoken}` }
+        })
+        .then(response => {
+            console.log(response);
+            return response.date
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
