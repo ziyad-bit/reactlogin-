@@ -35,7 +35,7 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        $items=Items::all();
+        $items=Items::paginate(6);
         return $items;
     }
 

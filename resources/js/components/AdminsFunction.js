@@ -130,3 +130,17 @@ export const updateProfile = async (id,newAdmins) => {
             console.log(err);
         });
 };
+
+export const handlePage = (pageNumber) => {
+    return axios
+        .get(url+"items?page="+pageNumber, {
+            headers: { Authorization: `Bearer ${localStorage.usertoken}` }
+        })
+        .then(response => {
+            
+            return response;
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};

@@ -10,7 +10,7 @@ class Add extends Component {
             description: "",
             price: "",
             status: "",
-            image:''
+            image: ""
         };
 
         this.submit = this.submit.bind(this);
@@ -21,23 +21,22 @@ class Add extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
-    changeStatePhoto=(e)=>{
+    changeStatePhoto = e => {
         this.setState({
-            image:e.target.files[0]
-        })
-    }
+            image: e.target.files[0]
+        });
+    };
 
     submit(e) {
         e.preventDefault();
 
-        const formData=new FormData();
-        formData.append('image',this.state.image)
-        formData.append('name',this.state.name)
-        formData.append('description',this.state.description)
-        formData.append('status',this.state.status)
-        formData.append('price',this.state.price)
+        const formData = new FormData();
+        formData.append("image", this.state.image);
+        formData.append("name", this.state.name);
+        formData.append("description", this.state.description);
+        formData.append("status", this.state.status);
+        formData.append("price", this.state.price);
 
-    
         addItems(formData).then(res => {
             this.setState({
                 name: "",
@@ -47,9 +46,6 @@ class Add extends Component {
             });
         });
     }
-
-
-    
 
     render() {
         return (
@@ -97,20 +93,22 @@ class Add extends Component {
                             </div>
                             <div className="form-group">
                                 <label>status</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={this.state.status}
+                                <select
                                     name="status"
+                                    class="form-control"
                                     onChange={this.changeState}
-                                />
+                                    
+                                >
+                                    <option value="1">new</option>
+                                    <option value="2">used</option>
+                                    <option value="3">very old</option>
+                                </select>
                             </div>
                             <div className="form-group">
                                 <label>photo</label>
                                 <input
                                     type="file"
                                     className="form-control"
-                                    
                                     name="image"
                                     onChange={this.changeStatePhoto}
                                 />
