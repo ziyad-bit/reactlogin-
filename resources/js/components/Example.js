@@ -15,17 +15,26 @@ import Landing from "./Landing";
 import Login from "./Login";
 import Register from "./Register";
 import Profile from "./Profile";
+import { getProfile } from "./AdminsFunction";
 
 import Add from "./Add";
 import Items from "./Items";
 import Photo from "./Photo";
 import EditProfile from "./EditProfile";
+import ItemDetails from "./ItemDetails";
 
 library.add(fab, faHome, faCalendarAlt, faBorderAll, faUser);
 
 class Example extends Component {
+    componentDidMount() {
+        getProfile().then(res => {
+            this.setState({
+                id: res.data.admins.id
+            });
+        });
+    }
+
     render() {
-        
         return (
             <Router>
                 <div className="Example">
@@ -36,14 +45,28 @@ class Example extends Component {
                         <Route exact path="/items" component={Items} />
                         <Route exact path="/register" component={Register} />
                         <Route exact path="/profile" component={Profile} />
-                        <Route exact path="/add/photo/:id" component={Photo} />
+                        <Route exact path="/item/details/:id" component={ItemDetails} />
                         <Route
                             exact
-                            path="/Admin/update/:id"
-                            component={EditProfile}
+                            path="/add/photo"
+                            render={props => (
+                                <Photo {...props} id={this.state.id} />
+                            )}
                         />
-                        <Route exact path="/items/addform" component={Add} />
-                        
+                        <Route
+                            exact
+                            path="/Admin/update"
+                            render={props => (
+                                <EditProfile {...props} id={this.state.id} />
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/items/addform"
+                            render={props => (
+                                <Add {...props} id={this.state.id} />
+                            )}
+                        />
                     </div>
                 </div>
             </Router>

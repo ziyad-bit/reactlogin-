@@ -9,13 +9,14 @@ li.list-group-item:nth-child(even){
     margin-right: 10px;
 }
 
-span{
-    color: #535c68;
+.list_span{
+    color: #34495e;
     font-weight: bold;
 }
 
 .list{
-    color:#22a6b3;
+    color: #27ae60;
+    font-weight: bold;
 }
 
 .btn{

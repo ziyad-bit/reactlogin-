@@ -48,7 +48,7 @@ export const getProfile =async () => {
         })
         .then(response => {
             console.log(response);
-            return response.data;
+            return response;
         })
         .catch(err => {
             console.log(err);
@@ -57,9 +57,9 @@ export const getProfile =async () => {
 
 //             crud app
 
-export const addItems = async (formData) => {
+export const addItems = async (formData,id) => {
     return await axios
-        .post(url+"items/add",formData,  {
+        .post(url+"items/add/"+id,formData,  {
             headers: { Authorization: `Bearer ${localStorage.usertoken}` },
             
         },
@@ -138,6 +138,48 @@ export const handlePage = (pageNumber) => {
         })
         .then(response => {
             
+            return response;
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
+export const getItem = (id) => {
+    return axios
+        .get(url+"item/details/"+id, {
+            headers: { Authorization: `Bearer ${localStorage.usertoken}` }
+        })
+        .then(response => {
+            
+            return response;
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
+export const postComment = async (newComment) => {
+    return await axios
+        .post(url+"item/add/comments",newComment, {
+            headers: { Authorization: `Bearer ${localStorage.usertoken}` }
+        })
+        .then(response => {
+            console.log(response);
+            return response
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
+export const getComment = (items_id) => {
+    return axios
+        .get(url+"item/comments/"+items_id, {
+            headers: { Authorization: `Bearer ${localStorage.usertoken}` }
+        })
+        .then(response => {
+            console.log(response);
             return response;
         })
         .catch(err => {

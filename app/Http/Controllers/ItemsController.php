@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Items;
+use App\Models\Admins;
+
 use App\Traits\UploadImage;
+use App\Traits\checkToken;
 
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -14,20 +17,16 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class ItemsController extends Controller
 {
     use UploadImage;
+    use checkToken;
 
     protected $admins;
 
-    /*public function __construct(){
-        try {
-            if (! $admins = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['admins_not_found'], 404);
-            }
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            return response()->json(['token_invalid'], $e->getStatusCode());
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-            return response()->json(['token_absent'], $e->getStatusCode());
-        }
-    }*/
+    public function __construct(){
+        $this->checkToken();
+        
+    }
+
+    
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +35,11 @@ class ItemsController extends Controller
     public function index()
     {
         $items=Items::paginate(6);
-        return $items;
+        
+        $admins=$this->checkToken();
+
+        return response()->json(compact('items','admins'));
+        
     }
 
     /**
@@ -55,17 +58,18 @@ class ItemsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
         
         $fileName=$this->uploadImage($request->file('image'),'images/Admins/items');
-
+        
         $items = Items::create([
             'name'        => $request->get('name'),
             'description' => $request->get('description'),
             'price'       => $request->get('price'),
             'status'      => $request->get('status'),
             'image'       => $fileName,
+            'admins_id'    => $id
         ]);
 
         return response()->json( compact('items') );
@@ -84,7 +88,8 @@ class ItemsController extends Controller
      */
     public function show($id)
     {
-        //
+        $item=Items::find($id);
+        return $item;
     }
 
     /**
@@ -112,7 +117,8 @@ class ItemsController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
+     *{ "key": "ctrl+cmd+=",  "command": "wwm.aligncode",
+                        "when": "editorTextFocus && !editorReadonly" }
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

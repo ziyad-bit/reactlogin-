@@ -4,9 +4,11 @@ import "../../css/Admins/items.css";
 import { Link } from "react-router-dom";
 import Pagination from "react-js-pagination";
 
+
 class Items extends Component {
     state = {
         items: [],
+        id:'',
         activePage: 1,
         itemsCountPerPage: 1,
         totalItemsCount: 1,
@@ -16,10 +18,11 @@ class Items extends Component {
     componentDidMount() {
         getItems().then(res => {
             this.setState({
-                items: res.data.data,
-                activePage: res.data.current_page,
-                totalItemsCount: res.data.total,
-                itemsCountPerPage: res.data.per_page
+                items: res.data.items.data,
+                id:res.data.admins.id,
+                activePage: res.data.items.current_page,
+                totalItemsCount: res.data.items.total,
+                itemsCountPerPage: res.data.items.per_page
             });
         });
     }
@@ -37,12 +40,15 @@ class Items extends Component {
     };
 
     render() {
+        
+        
+        
         return (
             <div>
                 <h1 className="text-center">All items</h1>
 
                 <div>
-                    <Link to="/items/addform" className="btn btn-info info ">
+                    <Link to={"/items/addform"} className="btn btn-info info ">
                         add items
                     </Link>
                 </div>
@@ -71,7 +77,7 @@ class Items extends Component {
                                     </div>
                                     <ul className="list-group list-group-flush">
                                         <li className="list-group-item">
-                                            <span>status</span> :{" "}
+                                            <span className='list_span'>status</span> :{" "}
                                             
                                                 {" "}
                                                 {item.status == 1 ? <span className="list">New </span>: null}
@@ -80,16 +86,16 @@ class Items extends Component {
                                             
                                         </li>
                                         <li className="list-group-item">
-                                            <span className="price">price</span>
+                                            <span className="list_span">price</span>
                                             :{" "}
                                             <span className="list">
                                                 $ {item.price}
                                             </span>
                                         </li>
                                         <li className="list-group-item">
-                                            <span className="btn btn-success">
+                                            <Link to={'/item/details/' + item.id } className="btn btn-success">
                                                 buy
-                                            </span>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>

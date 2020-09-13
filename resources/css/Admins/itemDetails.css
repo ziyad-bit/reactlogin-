@@ -1,0 +1,48 @@
+.rounded-circle{
+    width: 40px ;
+    min-height: 30px;
+}
+
+textarea{
+    width: 500px !important;
+}
+
+.comment{
+    margin-left: 280px;
+    
+}
+
+.image{
+    position: absolute;
+    margin-left: 230px;
+}
+
+.group3{
+    margin-right: 43px;
+    color: #34495e;
+    font-weight: bold;
+}
+
+.group4{
+    margin-right: 40px;
+    color: #34495e;
+    font-weight: bold;
+}
+
+.group5{
+    margin-right: 10px;
+    color: #34495e;
+    font-weight: bold;
+}
+
+.group6{
+    color: #34495e;
+    font-weight: bold;
+
+}
+
+.image_comment{
+    margin-top: 50px;
+}
+
+

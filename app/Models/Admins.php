@@ -29,6 +29,19 @@ class Admins extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
+
+    public function comments(){
+        return $this->hasMany('App\Models\Comments','admins_id');
+    }
+
+    
+
+    public function items(){
+        return $this->hasMany('App\Models\Items','admins_id');
+    }
+
+    
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

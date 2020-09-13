@@ -3,14 +3,15 @@ import { addItems } from "./AdminsFunction";
 import "../../css/Admins/Add.css";
 
 class Add extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             name: "",
             description: "",
             price: "",
-            status: "",
-            image: ""
+            status:2,
+            image: "",
+            
         };
 
         this.submit = this.submit.bind(this);
@@ -37,12 +38,13 @@ class Add extends Component {
         formData.append("status", this.state.status);
         formData.append("price", this.state.price);
 
-        addItems(formData).then(res => {
+        const id=this.props.id
+        addItems(formData,id).then(res => {
             this.setState({
                 name: "",
                 description: "",
                 price: "",
-                status: ""
+                
             });
         });
     }

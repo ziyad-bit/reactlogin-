@@ -15,31 +15,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('register', 'AdminsController@register');
-
 Route::post('login', 'AdminsController@login');
-
 
 
 Route::get('profile', 'AdminsController@getAuthenticatedadmins');
 
-
-
-
-
     
-Route::post("items/add", "itemsController@store");
-Route::get("items", "itemsController@index");
+Route:: post("items/add/{id}", "itemsController@store");
+Route:: get("items", "itemsController@index");
+Route:: get("item/details/{id}", "itemsController@show");
 
 
+Route:: post("add/photo/{id}", "AdminsController@upload");
+Route:: get("Admin/{id}", "AdminsController@edit");
+Route:: post("Admin/update/{id}", "AdminsController@update");
 
 
-Route::post("add/photo/{id}", "AdminsController@upload");
-Route::get("Admin/{id}", "AdminsController@edit");
-Route::post("Admin/update/{id}", "AdminsController@update");
-
-
-
-
+Route:: get("item/comments/{id}", "CommentsController@index");
+Route:: post("item/add/comments", "CommentsController@store");
 
 
 

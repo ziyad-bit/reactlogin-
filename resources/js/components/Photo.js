@@ -84,7 +84,7 @@ class Photo extends Component {
         const formData = new FormData();
         formData.append("image", this.state.image);
 
-        const id = this.props.match.params.id;
+        const id = this.props.id;
         postPhoto(id, formData).then(res => {
             if (res) {
                 this.setState({

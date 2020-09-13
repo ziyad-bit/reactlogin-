@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admins;
+
 use App\Traits\UploadImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+
+use App\Traits\checkToken;
 //use JWTAuth;
 
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -15,6 +18,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class Adminscontroller extends Controller
 {
     use UploadImage;
+    use checkToken;
 
     public function register(Request $request)
     {
@@ -42,6 +46,7 @@ class Adminscontroller extends Controller
         return response()->json(compact('admins', 'token'), 201);
     }
 
+
     public function login(Request $request)
     {
         $credentials = $request->json()->all();
@@ -57,19 +62,17 @@ class Adminscontroller extends Controller
         return response()->json(compact('token'));
     }
 
+
     public function getAuthenticatedadmins()
     {
-        try {
-            if (!$admins = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['admins_not_found'], 404);
-            }
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            return response()->json(['token_invalid'], $e->getStatusCode());
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-            return response()->json(['token_absent'], $e->getStatusCode());
-        }
-        return response()->json(compact('admins'));
+        $admins=$this->checkToken();
+
+        $admins_id=$admins->id;
+        $admins_items=Admins::find($admins_id)->items;
+        
+        return response()->json(compact('admins','admins_items'));
     }
+
 
     public function upload(Request $request, $id)
     {
@@ -103,6 +106,7 @@ class Adminscontroller extends Controller
         
     }
 
+    
     public function update(Request $request,$id){
         $admin=Admins::find($id);
 
