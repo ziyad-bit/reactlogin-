@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comments;
+
+
 use App\Models\Items;
+
 use App\Models\Admins;
 
+use App\Models\Comments;
 use App\Traits\checkToken;
-
 use Illuminate\Http\Request;
 
 class CommentsController extends Controller
@@ -19,18 +21,14 @@ class CommentsController extends Controller
     public function __construct()
     {
         $this->checkToken();
-
     }
 
     public function index($item_id)
     {
-        $admins_id = Items::find($item_id)->comments->pluck('admins_id')->toArray();
-        $admins    = Admins::whereIn('id',$admins_id)->get();
-
-        $comments_id = Items::find($item_id)->comments->pluck('id')->toArray();
-        $comments    = Comments::whereIn('id',$comments_id)->orderBy('admins_id')->get();
-
-        return response()->json(compact('admins','comments'));
+        
+        $admins_comments=Comments::with('admins')->where('items_id',$item_id)->get();
+        
+        return response()->json(compact('admins_comments'));
     }
 
     public function store(Request $request)
@@ -43,5 +41,4 @@ class CommentsController extends Controller
 
         return response()->json(compact('comments'));
     }
-
 }

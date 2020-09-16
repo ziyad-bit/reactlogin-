@@ -11,7 +11,7 @@ class Profile extends Component {
         id: "",
         created_at: "",
 
-        items:[]
+        items: []
     };
 
     componentDidMount() {
@@ -24,7 +24,7 @@ class Profile extends Component {
                 created_at: res.data.admins.created_at,
                 image: res.data.admins.image,
 
-                items:res.data.admins_items
+                items: res.data.admins_items
             });
         });
     }
@@ -32,16 +32,10 @@ class Profile extends Component {
     render() {
         const profile = (
             <div>
-                <Link
-                    to={"/add/photo" }
-                    className="btn btn-info photo"
-                >
+                <Link to={"/add/photo"} className="btn btn-info photo">
                     Edit photo
                 </Link>
-                <Link
-                    to={"/Admin/update"}
-                    className="btn btn-info photo"
-                >
+                <Link to={"/Admin/update"} className="btn btn-info btn_edit">
                     Edit profile
                 </Link>
 
@@ -83,6 +77,9 @@ class Profile extends Component {
                     </div>
                 </div>
 
+                <hr />
+
+                                <h3 className='text-center'> My items </h3>
                 <div className="row">
                     {this.state.items.map(item => {
                         return (
@@ -109,12 +106,21 @@ class Profile extends Component {
                                     <ul className="list-group list-group-flush">
                                         <li className="list-group-item">
                                             <span>status</span> :{" "}
-                                            
-                                                {" "}
-                                                {item.status == 1 ? <span className="list">New </span>: null}
-                                                {item.status == 2 ? <span className="list">used </span> : null}
-                                                {item.status == 3 ? <span className="list">very old </span>: null}
-                                            
+                                            {item.status == 1 ? (
+                                                <span className="list">
+                                                    New{" "}
+                                                </span>
+                                            ) : null}
+                                            {item.status == 2 ? (
+                                                <span className="list">
+                                                    used{" "}
+                                                </span>
+                                            ) : null}
+                                            {item.status == 3 ? (
+                                                <span className="list">
+                                                    very old{" "}
+                                                </span>
+                                            ) : null}
                                         </li>
                                         <li className="list-group-item">
                                             <span className="price">price</span>

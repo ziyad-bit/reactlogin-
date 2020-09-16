@@ -22,6 +22,7 @@ Route::get('profile', 'AdminsController@getAuthenticatedadmins');
 
     
 Route:: post("items/add/{id}", "itemsController@store");
+Route:: post("item/edit/{id}", "itemsController@edit");
 Route:: get("items", "itemsController@index");
 Route:: get("item/details/{id}", "itemsController@show");
 

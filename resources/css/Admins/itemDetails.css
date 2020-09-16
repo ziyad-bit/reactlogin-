@@ -43,6 +43,14 @@ textarea{
 
 .image_comment{
     margin-top: 50px;
+    
 }
 
 
+.img{
+    margin-right: 10px;
+}
+
+.name{
+    font-weight: bold;
+}

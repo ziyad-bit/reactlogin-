@@ -1,23 +1,24 @@
 import React, { Component } from "react";
 import { getItem, getProfile, postComment, getComment } from "./AdminsFunction";
-
+import { Link } from "react-router-dom";
 import "../../css/Admins/itemDetails.css";
 
 class ItemDetails extends Component {
     state = {
-        items_name : "",
-        status     : "",
+        items_name: "",
+        status: "",
         description: "",
-        created_at : "",
-        price      : "",
+        created_at: "",
+        price: "",
 
-        admins_name: "",
-        admins_id  : '',
+        admins: [],
+        admin_name: "",
 
         auth_name: "",
+        auth_id: "",
 
         comments: "",
-        comment : []
+        admins_comments: []
     };
 
     componentDidMount() {
@@ -39,21 +40,21 @@ class ItemDetails extends Component {
         getProfile().then(res => {
             this.setState({
                 auth_name: res.data.admins.name,
-
+                auth_id: res.data.admins.id,
                 auth_image: res.data.admins.image
             });
         });
 
         getComment(items_id).then(res => {
-            
             this.setState({
-                comment: res.data
-                
+                admins_comments: res.data.admins_comments
             });
         });
     }
 
-    
+    componentDidUpdate() {
+        console.log("updated");
+    }
 
     changeState = e => {
         this.setState({
@@ -66,20 +67,41 @@ class ItemDetails extends Component {
 
         const newComment = {
             comments: this.state.comments,
-            admins_id: this.state.admins_id,
-            items_id: this.state.items_id
+            admins_id: this.state.auth_id,
+            items_id: this.props.match.params.id
         };
+        const items_id = this.props.match.params.id;
+        getComment(items_id).then(res => {
+            this.setState({
+                admins_comments: res.data.admins_comments
+            });
+        });
 
         postComment(newComment).then(res => {
-            this.setState({
-                comments: ""
-            });
+            if (res) {
+                this.setState({
+                    comments: ""
+                });
+
+                getComment(items_id).then(res => {
+                    this.setState({
+                        admins_comments: res.data.admins_comments
+                    });
+                });
+            }
         });
     };
 
     render() {
         return (
             <div>
+                <Link
+                    className="btn btn-info photo"
+                    to={"/item/edit/" + this.props.match.params.id}
+                >
+                    {" "}
+                    edit item{" "}
+                </Link>
                 <div className="card mb-3" style={{ maxWidth: "540px" }}>
                     <div className="row no-gutters">
                         <div className="col-md-4">
@@ -145,7 +167,7 @@ class ItemDetails extends Component {
                             alt="..."
                             className="rounded-circle"
                         />
-                        <div>{this.state.auth_name}</div>
+                        <div className="name">{this.state.auth_name}</div>
                     </div>
 
                     <div className="col-md-9 comment">
@@ -158,7 +180,7 @@ class ItemDetails extends Component {
                                     className="form-control"
                                     id="exampleFormControlTextarea1"
                                     rows={3}
-                                    value={this.state.postComments}
+                                    value={this.state.comments}
                                     name="comments"
                                     onChange={this.changeState}
                                 />
@@ -174,29 +196,35 @@ class ItemDetails extends Component {
 
                 <hr />
 
-                <div className="row image_comment">
-                    {this.state.comment.map(com => {
-                        return (
-                            <div key={com.comment_id}>
+                <h3 className="text-center">comments</h3>
+                {this.state.admins_comments.map(admin_comment => {
+                    return (
+                        <div
+                            className="row image_comment"
+                            key={admin_comment.id}
+                        >
+                            <div>
                                 <div className="col-md-3 image">
                                     <img
                                         src={
                                             "/images/Admins/profile/" +
-                                            this.state.admins_image
+                                            admin_comment.admins.image
                                         }
                                         alt="..."
-                                        className="rounded-circle"
+                                        className="rounded-circle img"
                                     />
-                                    <div>{this.state.admins_name}</div>
+                                    <div className="name">
+                                        {admin_comment.admins.name}
+                                    </div>
                                 </div>
 
                                 <div className="col-md-9 comment">
-                                    <span> {com.comments} </span>
+                                    <span> {admin_comment.comments} </span>
                                 </div>
                             </div>
-                        );
-                    })}
-                </div>
+                        </div>
+                    );
+                })}
             </div>
         );
     }

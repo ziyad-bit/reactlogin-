@@ -165,7 +165,7 @@ export const postComment = async (newComment) => {
             headers: { Authorization: `Bearer ${localStorage.usertoken}` }
         })
         .then(response => {
-            console.log(response);
+            
             return response
         })
         .catch(err => {
@@ -181,6 +181,20 @@ export const getComment = (items_id) => {
         .then(response => {
             console.log(response);
             return response;
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
+export const updateItem = async (id,newitem) => {
+    return await axios
+        .post(url+"item/edit/"+id, newitem, {
+            headers: { Authorization: `Bearer ${localStorage.usertoken}` }
+        })
+        .then(response => {
+            console.log(response);
+            return response
         })
         .catch(err => {
             console.log(err);

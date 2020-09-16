@@ -69,7 +69,7 @@ class ItemsController extends Controller
             'price'       => $request->get('price'),
             'status'      => $request->get('status'),
             'image'       => $fileName,
-            'admins_id'    => $id
+            'admins_id'   => $id
         ]);
 
         return response()->json( compact('items') );
@@ -98,9 +98,16 @@ class ItemsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,Request $request)
     {
-        //
+        $items=Items::find($id);
+
+        $items->name        = $request->items_name;
+        $items->description = $request->description;
+        $items->status      = $request->status;
+        $items->price       = $request->price;
+
+        $items->save();
     }
 
     /**
@@ -117,8 +124,7 @@ class ItemsController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *{ "key": "ctrl+cmd+=",  "command": "wwm.aligncode",
-                        "when": "editorTextFocus && !editorReadonly" }
+     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

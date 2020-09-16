@@ -12,7 +12,7 @@ class EditProfile extends Component {
     };
 
     componentDidMount() {
-        const id = this.props.match.params.id;
+        const id = this.props.id;
         getAdmin(id).then(res=>{
             this.setState({
                 name:res.name,

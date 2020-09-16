@@ -14,3 +14,8 @@
 img{
     min-height: 255px;
 }
+
+.btn_edit{
+    margin-top: 20px;
+    margin-left: 80px;
+}

@@ -22,6 +22,7 @@ import Items from "./Items";
 import Photo from "./Photo";
 import EditProfile from "./EditProfile";
 import ItemDetails from "./ItemDetails";
+import EditItem from "./EditItem";
 
 library.add(fab, faHome, faCalendarAlt, faBorderAll, faUser);
 
@@ -46,6 +47,7 @@ class Example extends Component {
                         <Route exact path="/register" component={Register} />
                         <Route exact path="/profile" component={Profile} />
                         <Route exact path="/item/details/:id" component={ItemDetails} />
+                        <Route exact path="/item/edit/:id" component={EditItem} />
                         <Route
                             exact
                             path="/add/photo"
