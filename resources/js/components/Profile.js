@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { getProfile } from "./AdminsFunction";
+import { deleteItem, getProfile } from "./AdminsFunction";
 import "../../css/Admins/profile.css";
 
 class Profile extends Component {
@@ -28,6 +28,20 @@ class Profile extends Component {
             });
         });
     }
+
+    delete = id => {
+        deleteItem(id).then(res => {
+            let items = this.state.items;
+            for (let index = 0; index < items.length; index++) {
+                if (items[index].id == id) {
+                    items.splice(index, 1);
+                    this.setState({
+                        items
+                    });
+                }
+            }
+        });
+    };
 
     render() {
         const profile = (
@@ -79,7 +93,7 @@ class Profile extends Component {
 
                 <hr />
 
-                                <h3 className='text-center'> My items </h3>
+                <h3 className="text-center"> My items </h3>
                 <div className="row">
                     {this.state.items.map(item => {
                         return (
@@ -87,6 +101,23 @@ class Profile extends Component {
                                 className=" col-6 col-md-6 col-lg-4 "
                                 key={item.id}
                             >
+                                <button
+                                    className="btn btn-danger delete"
+                                    onClick={() => this.delete(item.id)}
+                                >
+                                    {" "}
+                                    delete{" "}
+                                </button>
+                                <Link
+                                    className="btn btn-info btn_edi"
+                                    to={
+                                        "/item/edit/" +
+                                        item.id
+                                    }
+                                >
+                                    {" "}
+                                    edit item{" "}
+                                </Link>
                                 <div
                                     className="card"
                                     style={{ width: "14rem" }}
@@ -102,6 +133,7 @@ class Profile extends Component {
                                         <h3 className="card-title">
                                             {item.name}
                                         </h3>
+                                        <div className='approve'>{item.approve == 0 ? 'unapproved' : null}</div>
                                     </div>
                                     <ul className="list-group list-group-flush">
                                         <li className="list-group-item">

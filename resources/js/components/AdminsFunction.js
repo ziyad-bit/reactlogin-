@@ -200,3 +200,31 @@ export const updateItem = async (id,newitem) => {
             console.log(err);
         });
 };
+
+export const deleteItem = async (id) => {
+    return await axios
+        .post(url+"item/delete/"+id,  {
+            headers: { Authorization: `Bearer ${localStorage.usertoken}` }
+        })
+        .then(response => {
+            console.log(response);
+            return response
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
+export const getCategory = async () => {
+    return await axios
+        .get(url+"category", {
+            headers: { Authorization: `Bearer ${localStorage.usertoken}` }
+        })
+        .then(response => {
+            console.log(response);
+            return response
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};

@@ -1,26 +1,38 @@
 import React, { Component } from "react";
-import { addItems } from "./AdminsFunction";
+import Select from "react-select";
+import { addItems, getCategory } from "./AdminsFunction";
 import "../../css/Admins/Add.css";
 
 class Add extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: "",
-            description: "",
-            price: "",
-            status:2,
-            image: "",
-            
-        };
+    state = {
+        name: "",
+        description: "",
+        price: "",
+        status: 2,
+        image: "",
 
-        this.submit = this.submit.bind(this);
-        this.changeState = this.changeState.bind(this);
+        category: "",
+        
+        categories: []
+    };
+
+    componentDidMount() {
+        getCategory().then(res => {
+            this.setState({
+                categories: res.data
+            });
+        });
     }
 
-    changeState(e) {
+    
+
+    changeState = e => {
         this.setState({ [e.target.name]: e.target.value });
-    }
+    };
+
+    changeSelect = e => {
+        this.setState({ category:e  ? e.value : '' });
+    };
 
     changeStatePhoto = e => {
         this.setState({
@@ -28,28 +40,34 @@ class Add extends Component {
         });
     };
 
-    submit(e) {
+    submit = e => {
         e.preventDefault();
-
+        
         const formData = new FormData();
         formData.append("image", this.state.image);
         formData.append("name", this.state.name);
         formData.append("description", this.state.description);
         formData.append("status", this.state.status);
+        formData.append("category_id", this.state.category);
         formData.append("price", this.state.price);
 
-        const id=this.props.id
-        addItems(formData,id).then(res => {
+        const id = this.props.id;
+        addItems(formData, id).then(res => {
             this.setState({
                 name: "",
                 description: "",
-                price: "",
-                
+                price: ""
             });
         });
-    }
+    };
 
     render() {
+        var array1 = this.state.categories;
+        var technologyList = [];
+        array1.forEach(function(element) {
+            technologyList.push({ label: element.name, value: element.id });
+        });
+
         return (
             <div className="container">
                 <div
@@ -99,12 +117,22 @@ class Add extends Component {
                                     name="status"
                                     class="form-control"
                                     onChange={this.changeState}
-                                    
                                 >
                                     <option value="1">new</option>
                                     <option value="2">used</option>
                                     <option value="3">very old</option>
                                 </select>
+                            </div>
+                            <div className="form-group">
+                                <label>category</label>
+
+                                <Select
+                                    name="category"
+                                    onChange={this.changeSelect}
+                                    value={technologyList.find(item=>item.value==='category')}
+                                    className="select"
+                                    options={technologyList}
+                                />
                             </div>
                             <div className="form-group">
                                 <label>photo</label>

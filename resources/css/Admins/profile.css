@@ -19,3 +19,16 @@ img{
     margin-top: 20px;
     margin-left: 80px;
 }
+
+.delete{
+    margin-left: 63px;
+}
+
+.btn_edi{
+    margin-left: 65px;
+}
+
+.approve{
+    background-color: red;
+    width: 100px;
+}

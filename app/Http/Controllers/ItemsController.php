@@ -9,8 +9,7 @@ use App\Models\Admins;
 use App\Traits\UploadImage;
 use App\Traits\checkToken;
 
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Facades\JWTAuth;
+
 
 
 
@@ -19,13 +18,7 @@ class ItemsController extends Controller
     use UploadImage;
     use checkToken;
 
-    protected $admins;
-
-    public function __construct(){
-        $this->checkToken();
-        
-    }
-
+    
     
     /**
      * Display a listing of the resource.
@@ -34,7 +27,7 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        $items=Items::paginate(6);
+        $items=Items::where('approve',1)->orderBy('id','desc')->paginate(6);
         
         $admins=$this->checkToken();
 
@@ -60,7 +53,8 @@ class ItemsController extends Controller
      */
     public function store(Request $request,$id)
     {
-        
+        $this->checkToken();
+
         $fileName=$this->uploadImage($request->file('image'),'images/Admins/items');
         
         $items = Items::create([
@@ -68,6 +62,7 @@ class ItemsController extends Controller
             'description' => $request->get('description'),
             'price'       => $request->get('price'),
             'status'      => $request->get('status'),
+            'category_id'      => $request->get('category_id'),
             'image'       => $fileName,
             'admins_id'   => $id
         ]);
@@ -88,6 +83,8 @@ class ItemsController extends Controller
      */
     public function show($id)
     {
+        $this->checkToken();
+
         $item=Items::find($id);
         return $item;
     }
@@ -100,6 +97,9 @@ class ItemsController extends Controller
      */
     public function edit($id,Request $request)
     {
+
+        $this->checkToken();
+        
         $items=Items::find($id);
 
         $items->name        = $request->items_name;
@@ -130,6 +130,7 @@ class ItemsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item=Items::find($id);
+        $item->delete();
     }
 }

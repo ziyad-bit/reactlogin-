@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\RouteUri;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,7 @@ Route:: post("items/add/{id}", "itemsController@store");
 Route:: post("item/edit/{id}", "itemsController@edit");
 Route:: get("items", "itemsController@index");
 Route:: get("item/details/{id}", "itemsController@show");
+Route::post('item/delete/{id}', 'itemsController@destroy');
 
 
 Route:: post("add/photo/{id}", "AdminsController@upload");
@@ -36,5 +38,5 @@ Route:: get("item/comments/{id}", "CommentsController@index");
 Route:: post("item/add/comments", "CommentsController@store");
 
 
-
+Route:: get("category", "CategoryController@show");
 

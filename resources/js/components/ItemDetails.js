@@ -13,6 +13,7 @@ class ItemDetails extends Component {
 
         admins: [],
         admin_name: "",
+        admin_id:'',
 
         auth_name: "",
         auth_id: "",
@@ -32,6 +33,7 @@ class ItemDetails extends Component {
                 description: res.data.description,
 
                 price: res.data.price,
+                admin_id:res.data.admins_id,
                 items_image: res.data.image,
                 created_at: res.data.created_at
             });
@@ -93,15 +95,18 @@ class ItemDetails extends Component {
     };
 
     render() {
+        const btn = (
+            <Link
+                className="btn btn-info photo"
+                to={"/item/edit/" + this.props.match.params.id}
+            >
+                {" "}
+                edit item{" "}
+            </Link>
+        );
         return (
             <div>
-                <Link
-                    className="btn btn-info photo"
-                    to={"/item/edit/" + this.props.match.params.id}
-                >
-                    {" "}
-                    edit item{" "}
-                </Link>
+                {this.state.auth_id == this.state.admin_id ? btn : null}
                 <div className="card mb-3" style={{ maxWidth: "540px" }}>
                     <div className="row no-gutters">
                         <div className="col-md-4">
@@ -177,7 +182,7 @@ class ItemDetails extends Component {
                                     Comment
                                 </label>
                                 <textarea
-                                    className="form-control"
+                                    className="form-control area"
                                     id="exampleFormControlTextarea1"
                                     rows={3}
                                     value={this.state.comments}

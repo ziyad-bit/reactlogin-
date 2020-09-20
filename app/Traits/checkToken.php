@@ -2,8 +2,9 @@
 
 namespace App\Traits;
 
-use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+
 /**
  * 
  */
