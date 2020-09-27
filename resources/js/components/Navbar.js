@@ -35,7 +35,7 @@ class Navbar extends Component {
                     </Link>
                 </li>
                 <li className="nav-item ">
-                    <Link to="/profile" className="nav-link">
+                    <Link to="/category" className="nav-link">
                         <FontAwesomeIcon icon="border-all" />
                         <span className="categories ">categories</span>
                     </Link>

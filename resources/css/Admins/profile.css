@@ -1,9 +1,13 @@
 .group1{
     margin-right: 40px;
+    color:#34495e ;
+    font-weight: bold;
 }
 
 .group2{
     margin-right: 5px;
+    color:#34495e ;
+    font-weight: bold;
 }
 
 .photo{
@@ -12,23 +16,40 @@
 }
 
 img{
-    min-height: 255px;
+    min-height: 208px;
 }
+
+
 
 .btn_edit{
     margin-top: 20px;
-    margin-left: 80px;
-}
-
-.delete{
-    margin-left: 63px;
-}
-
-.btn_edi{
     margin-left: 65px;
 }
 
-.approve{
-    background-color: red;
-    width: 100px;
+.delete{
+    padding: 5px;
+    margin-left: 63px;
+    margin-top: 30px;
+}
+
+.btn_edi{
+    padding: 5px;
+    margin-left: 52px;
+    margin-top: 30px;
+}
+
+.unapproved{
+    background-color: #e74c3c;
+    margin-left: 20px;
+    width: 130px;
+}
+
+.approved{
+    background-color: #2ecc71;
+    margin-left: 20px;
+    width: 130px;
+}
+
+.btn_buy{
+    padding: 5px;
 }

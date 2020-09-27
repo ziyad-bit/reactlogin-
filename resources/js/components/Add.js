@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Select from "react-select";
-import { addItems, getCategory } from "./AdminsFunction";
+import { addItems, getCategory, getProfile } from "./AdminsFunction";
 import "../../css/Admins/Add.css";
 
 class Add extends Component {
@@ -8,7 +8,7 @@ class Add extends Component {
         name: "",
         description: "",
         price: "",
-        status: 2,
+        status: '',
         image: "",
 
         category: "",
@@ -22,6 +22,12 @@ class Add extends Component {
                 categories: res.data
             });
         });
+
+        getProfile().then(res=>{
+            this.setState({
+                admin_id:res.data.admins.id
+            })
+        })
     }
 
     
@@ -51,12 +57,15 @@ class Add extends Component {
         formData.append("category_id", this.state.category);
         formData.append("price", this.state.price);
 
-        const id = this.props.id;
+        const id = this.state.admin_id;
         addItems(formData, id).then(res => {
             this.setState({
                 name: "",
                 description: "",
-                price: ""
+                price: "",
+                status:'',
+                
+                
             });
         });
     };
@@ -117,7 +126,9 @@ class Add extends Component {
                                     name="status"
                                     class="form-control"
                                     onChange={this.changeState}
+                                    value={this.state.status}
                                 >
+                                    <option value="">...</option>
                                     <option value="1">new</option>
                                     <option value="2">used</option>
                                     <option value="3">very old</option>
@@ -129,7 +140,7 @@ class Add extends Component {
                                 <Select
                                     name="category"
                                     onChange={this.changeSelect}
-                                    value={technologyList.find(item=>item.value==='category')}
+                                    value={technologyList.find(item=>item.value === 'category')}
                                     className="select"
                                     options={technologyList}
                                 />

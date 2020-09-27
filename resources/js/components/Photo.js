@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 
-import { postPhoto } from "./AdminsFunction";
+import { getProfile, postPhoto } from "./AdminsFunction";
 
 class Photo extends Component {
     state = {
         image: "",
+        
 
         success: "",
 
         imageRequired: "",
         imageType: ""
     };
+
 
     onChange = e => {
         this.setState({
@@ -121,6 +123,7 @@ class Photo extends Component {
                                 <input
                                     type="file"
                                     className="form-control"
+                                    
                                     name="image"
                                     onChange={this.onChange}
                                 />

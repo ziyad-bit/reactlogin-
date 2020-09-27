@@ -131,8 +131,8 @@ export const updateProfile = async (id,newAdmins) => {
         });
 };
 
-export const handlePage = (pageNumber) => {
-    return axios
+export const handlePage = async (pageNumber) => {
+    return await axios
         .get(url+"items?page="+pageNumber, {
             headers: { Authorization: `Bearer ${localStorage.usertoken}` }
         })
@@ -218,6 +218,34 @@ export const deleteItem = async (id) => {
 export const getCategory = async () => {
     return await axios
         .get(url+"category", {
+            headers: { Authorization: `Bearer ${localStorage.usertoken}` }
+        })
+        .then(response => {
+            console.log(response);
+            return response
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
+export const getCategoryItems = async (id) => {
+    return await axios
+        .get(url+"category/items/"+id, {
+            headers: { Authorization: `Bearer ${localStorage.usertoken}` }
+        })
+        .then(response => {
+            console.log(response);
+            return response
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
+export const getlimitItems = async () => {
+    return await axios
+        .get(url, {
             headers: { Authorization: `Bearer ${localStorage.usertoken}` }
         })
         .then(response => {

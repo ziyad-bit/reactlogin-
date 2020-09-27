@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { deleteItem, getProfile } from "./AdminsFunction";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../css/Admins/profile.css";
 
 class Profile extends Component {
@@ -19,9 +20,9 @@ class Profile extends Component {
             this.setState({
                 name: res.data.admins.name,
                 email: res.data.admins.email,
-                birthDate: res.data.admins.birth_date,
+                
                 id: res.data.admins.id,
-                created_at: res.data.admins.created_at,
+                created_at: res.data.admins.date,
                 image: res.data.admins.image,
 
                 items: res.data.admins_items
@@ -47,9 +48,11 @@ class Profile extends Component {
         const profile = (
             <div>
                 <Link to={"/add/photo"} className="btn btn-info photo">
+                <FontAwesomeIcon icon="edit" />
                     Edit photo
                 </Link>
-                <Link to={"/Admin/update"} className="btn btn-info btn_edit">
+                <Link to={"/Admin/update"} className="btn btn-info btn_edit" >
+                <FontAwesomeIcon icon="edit" />
                     Edit profile
                 </Link>
 
@@ -78,10 +81,7 @@ class Profile extends Component {
                                     <span className="group1">email</span>:
                                     {this.state.email}
                                 </li>
-                                <li className="list-group-item items_list">
-                                    <span className="group2">birth date</span>:
-                                    {this.state.birthDate}
-                                </li>
+                                
                                 <li className="list-group-item items_list">
                                     <span className="group2"> created at</span>:
                                     {this.state.created_at}
@@ -105,16 +105,19 @@ class Profile extends Component {
                                     className="btn btn-danger delete"
                                     onClick={() => this.delete(item.id)}
                                 >
+                                    <FontAwesomeIcon icon="trash" />
                                     {" "}
                                     delete{" "}
                                 </button>
                                 <Link
+                                
                                     className="btn btn-info btn_edi"
                                     to={
                                         "/item/edit/" +
                                         item.id
                                     }
                                 >
+                                    <FontAwesomeIcon icon="edit" />
                                     {" "}
                                     edit item{" "}
                                 </Link>
@@ -122,6 +125,7 @@ class Profile extends Component {
                                     className="card"
                                     style={{ width: "14rem" }}
                                 >
+                                    <span >{item.approve == 0 ? <span className='unapproved'>unapproved</span> : <span className='approved'>approved</span>}</span>
                                     <img
                                         src={
                                             "/images/Admins/items/" + item.image
@@ -130,10 +134,10 @@ class Profile extends Component {
                                         alt="..."
                                     />
                                     <div className="card-body">
-                                        <h3 className="card-title">
+                                        <h4 className="card-title">
                                             {item.name}
-                                        </h3>
-                                        <div className='approve'>{item.approve == 0 ? 'unapproved' : null}</div>
+                                        </h4>
+                                        
                                     </div>
                                     <ul className="list-group list-group-flush">
                                         <li className="list-group-item">
@@ -154,17 +158,21 @@ class Profile extends Component {
                                                 </span>
                                             ) : null}
                                         </li>
+                                        
                                         <li className="list-group-item">
-                                            <span className="price">price</span>
+                                            <span className="price">date</span>
                                             :{" "}
                                             <span className="list">
-                                                $ {item.price}
+                                                {item.date}
                                             </span>
                                         </li>
                                         <li className="list-group-item">
-                                            <span className="btn btn-success">
-                                                buy
-                                            </span>
+                                            
+                                            <Link to={'/item/details/' + item.id } className="btn btn-success btn_buy">
+                                                details
+                                            </Link>
+                                            
+                                            
                                         </li>
                                     </ul>
                                 </div>

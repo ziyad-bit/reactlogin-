@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getItems, handlePage } from "./AdminsFunction";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../css/Admins/items.css";
 import { Link } from "react-router-dom";
 import Pagination from "react-js-pagination";
@@ -19,7 +20,7 @@ class Items extends Component {
         getItems().then(res => {
             this.setState({
                 items: res.data.items.data,
-                id:res.data.admins.id,
+                
                 activePage: res.data.items.current_page,
                 totalItemsCount: res.data.items.total,
                 itemsCountPerPage: res.data.items.per_page
@@ -31,10 +32,10 @@ class Items extends Component {
         console.log(`active page is ${pageNumber}`);
         handlePage(pageNumber).then(res => {
             this.setState({
-                items: res.data.data,
-                activePage: res.data.current_page,
-                totalItemsCount: res.data.total,
-                itemsCountPerPage: res.data.per_page
+                items: res.data.items.data,
+                activePage: res.data.items.current_page,
+                totalItemsCount: res.data.items.total,
+                itemsCountPerPage: res.data.items.per_page
             });
         });
     };
@@ -49,7 +50,8 @@ class Items extends Component {
 
                 <div>
                     <Link to={"/items/addform"} className="btn btn-info info ">
-                        add items
+                    <FontAwesomeIcon icon="plus" />
+                        <span className='add'>add items</span>
                     </Link>
                 </div>
                 <div className="row">
@@ -71,9 +73,9 @@ class Items extends Component {
                                         alt="..."
                                     />
                                     <div className="card-body">
-                                        <h3 className="card-title">
+                                        <h4 className="card-title">
                                             {item.name}
-                                        </h3>
+                                        </h4>
                                     </div>
                                     <ul className="list-group list-group-flush">
                                         <li className="list-group-item">
@@ -85,16 +87,17 @@ class Items extends Component {
                                                 {item.status == 3 ? <span className="list">very old </span>: null}
                                             
                                         </li>
+                                        
                                         <li className="list-group-item">
-                                            <span className="list_span">price</span>
+                                            <span className="list_span2">date</span>
                                             :{" "}
                                             <span className="list">
-                                                $ {item.price}
+                                                {item.date}
                                             </span>
                                         </li>
                                         <li className="list-group-item">
-                                            <Link to={'/item/details/' + item.id } className="btn btn-success">
-                                                buy
+                                            <Link to={'/item/details/' + item.id } className="btn btn-success btn_buy">
+                                                buy ${item.price}
                                             </Link>
                                         </li>
                                     </ul>

@@ -4,6 +4,7 @@ li.list-group-item:nth-child(even){
 
 .info{
     margin-left: 65px; 
+    padding: 5px;
 }
 .price{
     margin-right: 10px;
@@ -14,10 +15,28 @@ li.list-group-item:nth-child(even){
     font-weight: bold;
 }
 
+.list_span1{
+    color: #34495e;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.list_span2{
+    color: #34495e;
+    font-weight: bold;
+    margin-right: 14px;
+}
+
 .list{
     color: #27ae60;
     font-weight: bold;
 }
+
+.list_price{
+    margin-left: 20px;
+}
+
+
 
 .btn{
     padding-top:5px;
@@ -30,4 +49,8 @@ li.list-group-item:nth-child(even){
 
 .card{
     margin-bottom: 20px;
+}
+
+.add{
+    margin-left: 5px;
 }

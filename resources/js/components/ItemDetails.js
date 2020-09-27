@@ -35,7 +35,7 @@ class ItemDetails extends Component {
                 price: res.data.price,
                 admin_id:res.data.admins_id,
                 items_image: res.data.image,
-                created_at: res.data.created_at
+                created_at: res.data.date
             });
         });
 
@@ -103,7 +103,11 @@ class ItemDetails extends Component {
                 {" "}
                 edit item{" "}
             </Link>
+
+            
         );
+
+        
         return (
             <div>
                 {this.state.auth_id == this.state.admin_id ? btn : null}
@@ -224,7 +228,7 @@ class ItemDetails extends Component {
                                 </div>
 
                                 <div className="col-md-9 comment">
-                                    <span> {admin_comment.comments} </span>
+                                    { admin_comment.comments }
                                 </div>
                             </div>
                         </div>

@@ -26,6 +26,7 @@ Route:: post("items/add/{id}", "itemsController@store");
 Route:: post("item/edit/{id}", "itemsController@edit");
 Route:: get("items", "itemsController@index");
 Route:: get("item/details/{id}", "itemsController@show");
+Route:: get("/", "adminsController@get");
 Route::post('item/delete/{id}', 'itemsController@destroy');
 
 
@@ -39,4 +40,5 @@ Route:: post("item/add/comments", "CommentsController@store");
 
 
 Route:: get("category", "CategoryController@show");
+Route:: get("category/items/{id}", "CategoryController@index");
 

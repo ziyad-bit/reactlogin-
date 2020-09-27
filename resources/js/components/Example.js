@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import { HashRouter as Router, Route, withRouter } from "react-router-dom";
+import { HashRouter as Router, Route, Switch, withRouter  } from "react-router-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import {
     faHome,
     faCalendarAlt,
     faBorderAll,
-    faUser
+    faUser,
+    faEdit,
+    faTrash,
+    faPlus
 } from "@fortawesome/free-solid-svg-icons";
 
 import Navbar from "./Navbar";
@@ -23,53 +26,66 @@ import Photo from "./Photo";
 import EditProfile from "./EditProfile";
 import ItemDetails from "./ItemDetails";
 import EditItem from "./EditItem";
+import Category from "./Category";
+import CategoryItems from "./CategoryItems";
+import Error404 from "./Error404";
 
-library.add(fab, faHome, faCalendarAlt, faBorderAll, faUser);
+library.add(
+    fab,
+    faHome,
+    faCalendarAlt,
+    faBorderAll,
+    faUser,
+    faEdit,
+    faTrash,
+    faPlus
+);
 
 class Example extends Component {
-    componentDidMount() {
-        getProfile().then(res => {
-            this.setState({
-                id: res.data.admins.id
-            });
-        });
-    }
-
     render() {
         return (
             <Router>
                 <div className="Example">
-                    <Navbar />
-                    <Route exact path="/" component={Landing} />
+                    <Navbar/>
+                    
+                    
                     <div className="container">
+                    <Switch>
+                    
+                    <Route exact path="/" component={Landing} />
+                    
                         <Route exact path="/login" component={Login} />
+                        <Route exact path="/category" component={Category} />
                         <Route exact path="/items" component={Items} />
                         <Route exact path="/register" component={Register} />
                         <Route exact path="/profile" component={Profile} />
-                        <Route exact path="/item/details/:id" component={ItemDetails} />
-                        <Route exact path="/item/edit/:id" component={EditItem} />
                         <Route
                             exact
-                            path="/add/photo"
-                            render={props => (
-                                <Photo {...props} id={this.state.id} />
-                            )}
+                            path="/category/items/:id"
+                            component={CategoryItems}
                         />
+                        <Route
+                            exact
+                            path="/item/details/:id"
+                            component={ItemDetails}
+                        />
+                        <Route
+                            exact
+                            path="/item/edit/:id"
+                            component={EditItem}
+                        />
+                        <Route exact path="/add/photo" component={Photo} />
                         <Route
                             exact
                             path="/Admin/update"
-                            render={props => (
-                                <EditProfile {...props} id={this.state.id} />
-                            )}
+                            component={EditProfile}
                         />
-                        <Route
-                            exact
-                            path="/items/addform"
-                            render={props => (
-                                <Add {...props} id={this.state.id} />
-                            )}
-                        />
+
+                        <Route exact path="/items/addform" component={Add} />
+                        <Route exact path="/*" component={Error404} />
+                        </Switch>
                     </div>
+                    
                 </div>
             </Router>
         );

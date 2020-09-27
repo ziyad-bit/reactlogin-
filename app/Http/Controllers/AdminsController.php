@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admins;
+use App\Models\Items;
 
+use App\Models\Admins;
+use App\Traits\checkToken;
 use App\Traits\UploadImage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
-use App\Traits\checkToken;
+use Tymon\JWTAuth\Facades\JWTAuth;
 //use JWTAuth;
 
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Adminscontroller extends Controller
 {
@@ -39,6 +40,7 @@ class Adminscontroller extends Controller
             'email' => $request->json()->get('email'),
 
             'password' => Hash::make($request->json()->get('password')),
+            'date' => now()
         ]);
 
         $token = JWTAuth::fromuser($admins);
@@ -119,6 +121,11 @@ class Adminscontroller extends Controller
         
 
         
+    }
+
+    public function get(){
+        $items=Items::orderBy('id','desc')->limit(6)->get();
+        return response()->json(compact('items'));
     }
 
 }

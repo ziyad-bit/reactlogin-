@@ -31,10 +31,11 @@ class ItemsController extends Controller
         
         $admins=$this->checkToken();
 
-        return response()->json(compact('items','admins'));
+        return response()->json(compact('items'));
         
     }
 
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -64,7 +65,8 @@ class ItemsController extends Controller
             'status'      => $request->get('status'),
             'category_id'      => $request->get('category_id'),
             'image'       => $fileName,
-            'admins_id'   => $id
+            'admins_id'   => $id,
+            'date'        =>now()
         ]);
 
         return response()->json( compact('items') );
